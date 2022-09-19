@@ -18,7 +18,7 @@ app.get("/protected", authorizeUser, (req, res) => res.send(req.user));
 
 //database connection
 const connection = async () => {
-  await mongoose.connect("mongodb://localhost:27017/book-store");
+  await mongoose.connect(process.env.MONGO_URI);
 };
 connection();
 
