@@ -29,7 +29,11 @@ export const registerUser = async (req, res) => {
   //checking if the user already exists
   const userExists = await User.findOne({ username: username });
   if (userExists) {
-    return res.status(400).json({ error: "User already exists" });
+    return res.status(400).json({ message: "This username already exists" });
+  }
+  const userEmailExists = await User.findOne({ email: email });
+  if (userExists) {
+    return res.status(400).json({ message: "This email already exists" });
   }
 
   //validating email
@@ -51,14 +55,14 @@ export const registerUser = async (req, res) => {
             .json({ username, email, token: generateJwt(user._id) });
         }
       } catch (error) {
-        return res.status(400).json({ error: error });
+        return res.status(400).json({ message: "It is an error" });
       }
     }
 
-    return res.status(400).json({ error: "Passwords doesn't match" });
+    return res.status(400).json({ message: "Passwords doesn't match" });
   }
 
-  return res.status(400).json({ error: "Invalid email" });
+  return res.status(400).json({ message: "Invalid email" });
 };
 
 // @desc    Login  user
@@ -69,7 +73,7 @@ export const login = async (req, res) => {
 
   //checking if any field is empty
   if (!email || !password) {
-    return res.status(400).json({ error: "Please fill all the fields " });
+    return res.status(400).json({ message: "Please fill all the fields " });
   }
 
   //checking if the user  exists
@@ -83,7 +87,7 @@ export const login = async (req, res) => {
         token: generateJwt(userExists._id),
       });
     }
-    return res.status(400).json({ error: "Invalid password" });
+    res.status(400).json({ message: "Invalid password" });
   }
-  return res.status(400).json({ error: "No user with this email found" });
+  return res.status(400).json({ message: "No user with this email found" });
 };

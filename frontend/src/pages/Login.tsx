@@ -1,10 +1,11 @@
 import React from "react";
-import Form, { caseEnum } from "../components/Form";
+import Form from "../components/Form";
+import { caseEnum } from "../types";
 
 const Login = () => {
   return (
     <>
-      <Form formCase={caseEnum.REGISTER} />
+      <Form formCase={caseEnum.LOGIN} />
     </>
   );
 };

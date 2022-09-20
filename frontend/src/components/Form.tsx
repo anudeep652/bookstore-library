@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -16,11 +16,12 @@ import Alert from "@mui/material/Alert";
 import { Collapse } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import IconButton from "@mui/material/IconButton";
-
-export enum caseEnum {
-  LOGIN = "LOGIN",
-  REGISTER = "REGISTER",
-}
+import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { caseEnum, initialStateType, registerType } from "../types";
+import { useDispatch, useSelector } from "react-redux";
+import { login, register, reset } from "../features/user/userSlice";
+import { AppDispatch } from "../app/store";
+import { RootState } from "../app/store";
 
 type prop = {
   formCase: string;
@@ -30,34 +31,66 @@ const theme = createTheme();
 
 const Form = ({ formCase }: prop) => {
   const [emptyFieldsError, setEmptyFieldsError] = useState<boolean>(false);
-  const [formFields, setFormFields] = useState({
+  const [formFields, setFormFields] = useState<registerType>({
     username: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
+  let [errorMessage, setErrorMessage] = useState<string>("");
+
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+  const { isError, message, isSuccess } = useSelector(
+    (state: RootState) => state.auth
+  );
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (formCase === caseEnum.REGISTER) {
-      if (!formFields.username || !formFields.email || !formFields.password) {
+      if (
+        !formFields.username ||
+        !formFields.email ||
+        !formFields.password ||
+        !formFields.confirmPassword
+      ) {
+        setErrorMessage("Please fill all the fields");
         setEmptyFieldsError(true);
       } else {
+        if (formFields.password === formFields.confirmPassword) {
+          setEmptyFieldsError(false);
+          dispatch(register(formFields));
+        } else {
+          setErrorMessage("Passwords doesn't match");
+          setEmptyFieldsError(true);
+        }
+
         console.log(formFields);
       }
     } else {
       if (!formFields.email || !formFields.password) {
+        setErrorMessage("Please fill all the fields");
+
         setEmptyFieldsError(true);
       } else {
-        console.log(formFields);
+        setEmptyFieldsError(false);
+        dispatch(login(formFields));
       }
     }
   };
 
+  useEffect(() => {
+    if (!isError && isSuccess && message === "") {
+      navigate("/", { replace: true });
+      dispatch(reset());
+    }
+  }, [isError, isSuccess, message, navigate, dispatch]);
+
   return (
     <>
       <ThemeProvider theme={theme}>
-        {emptyFieldsError && (
+        {(emptyFieldsError || isError) && (
           <>
             <Collapse in={true}>
               <Alert
@@ -76,7 +109,7 @@ const Form = ({ formCase }: prop) => {
                 }
                 sx={{ mb: 2 }}
               >
-                Please fill all the fields
+                {emptyFieldsError ? errorMessage : message}
               </Alert>
             </Collapse>
           </>
@@ -127,6 +160,7 @@ const Form = ({ formCase }: prop) => {
 
                 <Grid item xs={12}>
                   <TextField
+                    type={"email"}
                     required
                     fullWidth
                     id="email"
@@ -160,6 +194,26 @@ const Form = ({ formCase }: prop) => {
                     }
                   />
                 </Grid>
+                {formCase === caseEnum.REGISTER && (
+                  <Grid item xs={12}>
+                    <TextField
+                      required
+                      fullWidth
+                      name="confirmPassword"
+                      label="confirmPassword"
+                      type="password"
+                      id="confirmPassword"
+                      autoComplete="off"
+                      value={formFields.confirmPassword}
+                      onChange={(e) =>
+                        setFormFields({
+                          ...formFields,
+                          [e.target.name]: e.target.value,
+                        })
+                      }
+                    />
+                  </Grid>
+                )}
                 {/* <Grid item xs={12}>
                   <FormControlLabel
                     control={
@@ -179,10 +233,18 @@ const Form = ({ formCase }: prop) => {
               </Button>
               <Grid container justifyContent="flex-end">
                 <Grid item>
-                  <Link href="#" variant="body2">
-                    {formCase === caseEnum.REGISTER
-                      ? "Already have an account? Login "
-                      : "Don't have an account? Sign up"}
+                  <Link>
+                    <RouterLink
+                      to={
+                        formCase === caseEnum.REGISTER
+                          ? "/user/login"
+                          : "/user/register"
+                      }
+                    >
+                      {formCase === caseEnum.REGISTER
+                        ? "Already have an account? Login "
+                        : "Don't have an account? Sign up"}
+                    </RouterLink>
                   </Link>
                 </Grid>
               </Grid>

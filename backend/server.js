@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import { authorizeUser } from "./middleware/auth.js";
 import userRoutes from "./routes/user.js";
 dotenv.config();
+import cors from "cors";
 
 //initializing express app
 const app = express();
@@ -11,6 +12,7 @@ const PORT = process.env.PORT || 5000;
 
 //middle wares
 app.use(express.json());
+app.use(cors());
 
 //routes
 app.use("/user/", userRoutes);
