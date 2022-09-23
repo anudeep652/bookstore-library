@@ -70,6 +70,8 @@ export const registerUser = async (req, res) => {
 // @access  Public
 export const login = async (req, res) => {
   const { email, password } = req.body;
+  console.log(email, password);
+  console.log("Hello");
 
   //checking if any field is empty
   if (!email || !password) {
@@ -87,7 +89,7 @@ export const login = async (req, res) => {
         token: generateJwt(userExists._id),
       });
     }
-    res.status(400).json({ message: "Invalid password" });
+    return res.status(400).json({ message: "Invalid password" });
   }
   return res.status(400).json({ message: "No user with this email found" });
 };

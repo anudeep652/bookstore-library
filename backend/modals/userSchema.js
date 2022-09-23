@@ -16,6 +16,7 @@ const userSchema = new mongoose.Schema(
       required: true,
       type: String,
     },
+    reviewsMade: { type: mongoose.Schema.Types.ObjectId, ref: "Book" },
   },
   {
     timestamps: true,

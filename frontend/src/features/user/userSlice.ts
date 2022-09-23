@@ -9,6 +9,7 @@ const initialState:initialStateType = {
     email:user?.username,
     isError:false,
     isSuccess:false,
+    isLoggedIn:false,
     message:''
 }
 
@@ -73,6 +74,7 @@ export const userSlice = createSlice({
             state.email = action.payload.email
             state.username  = action.payload.username
             state.isSuccess = true
+            state.isLoggedIn=true
         })
         .addCase(register.rejected,(state,action:AnyAction) => {
           state.isError = true
@@ -86,6 +88,7 @@ export const userSlice = createSlice({
             state.username  = action?.payload?.username
             state.isSuccess = true
             state.isError= false
+            state.isLoggedIn=true
         })
         .addCase(login.rejected,(state,action:AnyAction) => {
             state.isError = true

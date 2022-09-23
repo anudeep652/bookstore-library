@@ -15,7 +15,8 @@ export interface localStorageUser extends Pick<registerType,'username' | 'email'
 export interface initialStateType extends Omit<registerType,'confirmPassword'| 'password'>{
     isError:boolean,
     isSuccess:boolean
-    message:string
+    message:string,
+    isLoggedIn:boolean
 }
 
 

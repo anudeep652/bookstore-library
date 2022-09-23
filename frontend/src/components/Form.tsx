@@ -13,21 +13,36 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Alert from "@mui/material/Alert";
-import { Collapse } from "@mui/material";
+import { Collapse, Paper } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import IconButton from "@mui/material/IconButton";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
-import { caseEnum, initialStateType, registerType } from "../types";
+import { caseEnum, registerType } from "../types";
 import { useDispatch, useSelector } from "react-redux";
 import { login, register, reset } from "../features/user/userSlice";
 import { AppDispatch } from "../app/store";
 import { RootState } from "../app/store";
+import { fontWeight } from "@mui/system";
 
 type prop = {
   formCase: string;
 };
 
-const theme = createTheme();
+const theme = createTheme({
+  typography: {
+    h1: {
+      "@media (max-width:600px)": {
+        fontSize: "2.5em",
+        padding: "0 auto",
+      },
+    },
+    h3: {
+      "@media (max-width:600px)": {
+        marginLeft: "15px",
+      },
+    },
+  },
+});
 
 const Form = ({ formCase }: prop) => {
   const [emptyFieldsError, setEmptyFieldsError] = useState<boolean>(false);
@@ -47,6 +62,8 @@ const Form = ({ formCase }: prop) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    dispatch(reset());
 
     if (formCase === caseEnum.REGISTER) {
       if (
@@ -81,6 +98,8 @@ const Form = ({ formCase }: prop) => {
   };
 
   useEffect(() => {
+    setEmptyFieldsError(false);
+    setErrorMessage("");
     if (!isError && isSuccess && message === "") {
       navigate("/", { replace: true });
       dispatch(reset());
@@ -90,167 +109,212 @@ const Form = ({ formCase }: prop) => {
   return (
     <>
       <ThemeProvider theme={theme}>
-        {(emptyFieldsError || isError) && (
-          <>
-            <Collapse in={true}>
-              <Alert
-                severity="error"
-                action={
-                  <IconButton
-                    aria-label="close"
-                    color="inherit"
-                    size="small"
-                    onClick={() => {
-                      setEmptyFieldsError(false);
-                    }}
-                  >
-                    <CloseIcon fontSize="inherit" />
-                  </IconButton>
-                }
-                sx={{ mb: 2 }}
-              >
-                {emptyFieldsError ? errorMessage : message}
-              </Alert>
-            </Collapse>
-          </>
-        )}
-        <Container component="main" maxWidth="xs">
+        <Grid
+          container
+          component="main"
+          sx={{
+            height: "70vh",
+            width: "70vw",
+            textAlign: "center",
+            margin: "6em auto",
+            display: "flex",
+            fontFamily: "Josefin Sans",
+            // fontWeight: "",
+          }}
+        >
           <CssBaseline />
-          <Box
+          <Grid
+            item
+            xs={false}
+            sm={4}
+            md={7}
             sx={{
-              marginTop: 8,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
+              backgroundImage:
+                "url(https://thumbs.dreamstime.com/b/open-book-profit-icons-above-close-up-hd-video-big-concept-221172255.jpg)",
+              backgroundRepeat: "no-repeat",
+              backgroundColor: (t) =>
+                t.palette.mode === "light"
+                  ? t.palette.grey[50]
+                  : t.palette.grey[900],
+              backgroundSize: "cover",
+              backgroundPosition: "center",
             }}
+          />
+          <Grid
+            item
+            xs={12}
+            sm={8}
+            md={5}
+            component={Paper}
+            elevation={6}
+            square
           >
-            <Avatar sx={{ m: 1, bgcolor: "grey" }}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              {formCase === caseEnum.REGISTER ? "Sign up" : "Login"}
-            </Typography>
+            <Grid container>
+              <Grid item xs md={12}>
+                <Typography
+                  variant="h1"
+                  sx={{
+                    fontSize: "3.5em",
+                    padding: 4,
+                    fontWeight: 500,
+                    paddingBottom: 1,
+                    fontFamily: "Josefin Sans",
+                    color: "#24FF00",
+                  }}
+                >
+                  Bookstore Library
+                </Typography>
+              </Grid>
+              <Grid item md={12}>
+                <Typography
+                  variant="h3"
+                  style={{ fontSize: "1.5rem", fontFamily: "Josefin Sans" }}
+                >
+                  The only bookstore you need!
+                </Typography>
+              </Grid>
+            </Grid>
+
             <Box
-              component="form"
-              noValidate
-              onSubmit={handleSubmit}
-              sx={{ mt: 3 }}
+              sx={{
+                my: 4,
+                mx: 4,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
             >
-              <Grid container spacing={2}>
-                {formCase === "REGISTER" && (
-                  <Grid item xs={12}>
-                    <TextField
-                      autoComplete="given-name"
-                      name="username"
-                      required
-                      fullWidth
-                      id="firstName"
-                      label="Username"
-                      autoFocus
-                      value={formFields.username}
-                      onChange={(e) =>
-                        setFormFields({
-                          ...formFields,
-                          [e.target.name]: e.target.value,
-                        })
+              {(emptyFieldsError || isError) && (
+                <>
+                  <Collapse in={true}>
+                    <Alert
+                      severity="error"
+                      action={
+                        <IconButton
+                          aria-label="close"
+                          color="inherit"
+                          size="small"
+                          onClick={() => {
+                            dispatch(reset());
+                            setEmptyFieldsError(false);
+                          }}
+                        >
+                          <CloseIcon fontSize="inherit" />
+                        </IconButton>
                       }
-                    />
-                  </Grid>
+                      sx={{ mb: 2, width: "450px" }}
+                    >
+                      {emptyFieldsError ? errorMessage : message}
+                    </Alert>
+                  </Collapse>
+                </>
+              )}
+              <Avatar sx={{ m: 1, bgcolor: "#3be31f" }}>
+                <LockOutlinedIcon />
+              </Avatar>
+              <Typography component="h1" variant="h5">
+                {formCase === caseEnum.REGISTER ? "Sign up" : "Login"}
+              </Typography>
+              <Box
+                component="form"
+                noValidate
+                onSubmit={handleSubmit}
+                sx={{ mt: 1 }}
+              >
+                {formCase === "REGISTER" && (
+                  <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="username"
+                    label="Username"
+                    name="username"
+                    autoComplete="off"
+                    autoFocus={formCase === caseEnum.REGISTER}
+                    value={formFields.username}
+                    onChange={(e) =>
+                      setFormFields({
+                        ...formFields,
+                        [e.target.name]: e.target.value,
+                      })
+                    }
+                  />
                 )}
 
-                <Grid item xs={12}>
-                  <TextField
-                    type={"email"}
-                    required
-                    fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="off"
-                    value={formFields.email}
-                    onChange={(e) =>
-                      setFormFields({
-                        ...formFields,
-                        [e.target.name]: e.target.value,
-                      })
-                    }
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="off"
-                    value={formFields.password}
-                    onChange={(e) =>
-                      setFormFields({
-                        ...formFields,
-                        [e.target.name]: e.target.value,
-                      })
-                    }
-                  />
-                </Grid>
-                {formCase === caseEnum.REGISTER && (
-                  <Grid item xs={12}>
-                    <TextField
-                      required
-                      fullWidth
-                      name="confirmPassword"
-                      label="confirmPassword"
-                      type="password"
-                      id="confirmPassword"
-                      autoComplete="off"
-                      value={formFields.confirmPassword}
-                      onChange={(e) =>
-                        setFormFields({
-                          ...formFields,
-                          [e.target.name]: e.target.value,
-                        })
-                      }
-                    />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="off"
+                  autoFocus={formCase !== caseEnum.REGISTER}
+                  value={formFields.email}
+                  onChange={(e) =>
+                    setFormFields({
+                      ...formFields,
+                      [e.target.name]: e.target.value,
+                    })
+                  }
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="off"
+                  value={formFields.password}
+                  onChange={(e) =>
+                    setFormFields({
+                      ...formFields,
+                      [e.target.name]: e.target.value,
+                    })
+                  }
+                />
+
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{
+                    mt: 3,
+                    mb: 2,
+                    backgroundColor: "#16A000",
+                    ":hover": { backgroundColor: "#16A000" },
+                  }}
+                >
+                  {formCase === caseEnum.REGISTER ? "Sign up" : "Login"}
+                </Button>
+                <Grid container>
+                  {/* <Grid item xs>
+                    <Link href="#" variant="body2" sx={{ marginLeft: "1px" }}>
+                      Forgot password?
+                    </Link>
+                  </Grid> */}
+                  <Grid item>
+                    <Link href="#" variant="body2">
+                      <RouterLink
+                        to={
+                          formCase === caseEnum.REGISTER
+                            ? "/user/login"
+                            : "/user/register"
+                        }
+                      >
+                        {formCase === caseEnum.REGISTER
+                          ? "Already have an account? Login "
+                          : "Don't have an account? Sign up"}
+                      </RouterLink>
+                    </Link>
                   </Grid>
-                )}
-                {/* <Grid item xs={12}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox value="allowExtraEmails" color="primary" />
-                    }
-                    label="I want to receive information about  new books, marketing promotions and updates via email."
-                  />
-                </Grid> */}
-              </Grid>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                {formCase === caseEnum.REGISTER ? "Sign up" : "Login"}
-              </Button>
-              <Grid container justifyContent="flex-end">
-                <Grid item>
-                  <Link>
-                    <RouterLink
-                      to={
-                        formCase === caseEnum.REGISTER
-                          ? "/user/login"
-                          : "/user/register"
-                      }
-                    >
-                      {formCase === caseEnum.REGISTER
-                        ? "Already have an account? Login "
-                        : "Don't have an account? Sign up"}
-                    </RouterLink>
-                  </Link>
                 </Grid>
-              </Grid>
+              </Box>
             </Box>
-          </Box>
-        </Container>
+          </Grid>
+        </Grid>
       </ThemeProvider>
     </>
   );
