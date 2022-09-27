@@ -2,11 +2,12 @@ import React, { useEffect } from "react";
 import Login from "./pages/Login";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Register from "./pages/Register";
-import { localStorageUser } from "./types";
+// import { localStorageUser } from "./types";
 import Dashboard from "./pages/Dashboard";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./app/store";
 import { reset } from "./features/user/userSlice";
+import Book from "./pages/Book";
 
 function App() {
   const user = JSON.parse(localStorage.getItem("user") || "{}");
@@ -23,7 +24,7 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/user">
+          {/* <Route path="/user">
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
           </Route>
@@ -33,7 +34,9 @@ function App() {
             ) : (
               <Route path="/" element={<Login />} />
             )}
-          </Route>
+          </Route> */}
+          <Route path="/book" element={<Book />} />
+          <Route path="/" element={<Dashboard />} />
         </Routes>
       </BrowserRouter>
     </>

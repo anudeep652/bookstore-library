@@ -1,0 +1,49 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,200;0,400;1,200;1,300;1,600&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+body {
+  font-family: "Josefin Sans", sans-serif;
+}
+
+p.read-more {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.read-more-link {
+  color: blue;
+}
+.read-more-link:hover {
+  text-decoration: underline;
+}
+
+g,
+svg {
+  cursor: default;
+}
+
+.uparrow {
+  position: absolute;
+  bottom: 100px;
+  cursor: pointer;
+  background-color: rgb(249 250 251 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 1;
+  border-radius: 50%;
+
+  right: 50px;
+  position: fixed;
+  opacity: 10;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (max-width: 400px) {
+  .uparrow {
+    right: 10px;
+  }
+}

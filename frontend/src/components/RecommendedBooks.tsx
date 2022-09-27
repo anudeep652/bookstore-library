@@ -1,19 +1,19 @@
+import React from "react";
 import { Link } from "react-router-dom";
-import Navbar from "../components/Navbar";
-import UpArrow from "../components/UpArrow";
 
-const Dashboard = () => {
+const RecommendedBooks = () => {
   return (
     <>
-      <Navbar />
+      <h1 className="text-3xl  mx-5 md:mx-20 mt-10 mb-5">
+        Recommended for you
+      </h1>
       <div className="max-w-sm mx-auto bg-white rounded-xl  overflow-hidden md:max-w-[90%] grid md:grid-cols-2 md:gap-10 ">
         {[1, 2, 3, 4, 5].map((n) => (
-          // < >
-          <div className="md:flex shadow-md my-5 col-span p-10" key={n}>
+          <div className="md:flex shadow-md my-5 col-span p-5" key={n}>
             <div className="md:shrink-0">
               <img
                 className="h-48 w-full object-cover md:h-full md:w-48"
-                src="https://coolmaterial.com/wp-content/uploads/2016/08/The-Odyssey-Homer.jpg"
+                src="https://images.unsplash.com/photo-1459369510627-9efbee1e6051?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8Ym9vayUyMGZyb250JTIwY292ZXJ8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"
                 alt="Man looking at item at a store"
               />
             </div>
@@ -55,12 +55,10 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          // </>
         ))}
       </div>
-      <UpArrow />
     </>
   );
 };
 
-export default Dashboard;
+export default RecommendedBooks;
