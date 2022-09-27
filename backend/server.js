@@ -1,9 +1,10 @@
+dotenv.config();
 import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
 import { authorizeUser } from "./middleware/auth.js";
-import userRoutes from "./routes/user.js";
-dotenv.config();
+import userRoutes from "./routes/userRoutes.js";
+import bookRoutes from "./routes/bookRoutes.js";
 import cors from "cors";
 
 //initializing express app
@@ -16,7 +17,7 @@ app.use(cors());
 
 //routes
 app.use("/user/", userRoutes);
-app.get("/protected", authorizeUser, (req, res) => res.send(req.user));
+app.use("/book", bookRoutes);
 
 //database connection
 const connection = async () => {

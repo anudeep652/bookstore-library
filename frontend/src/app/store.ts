@@ -1,9 +1,11 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import authReducer from '../features/user/userSlice'
+import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
+import authReducer from "../features/user/userSlice";
+import bookReducer from "../features/books/bookSlice";
 
 export const store = configureStore({
   reducer: {
-    auth:authReducer
+    auth: authReducer,
+    book: bookReducer,
   },
 });
 

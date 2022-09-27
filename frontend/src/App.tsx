@@ -3,7 +3,7 @@ import Login from "./pages/Login";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Register from "./pages/Register";
 // import { localStorageUser } from "./types";
-import Dashboard from "./pages/Dashboard";
+import Home from "./pages/Home";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./app/store";
 import { reset } from "./features/user/userSlice";
@@ -24,19 +24,24 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          {/* <Route path="/user">
+          <Route path="/user">
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
           </Route>
           <Route path="/">
             {user.email ? (
-              <Route path="/" element={<Dashboard />} />
+              <Route path="/" element={<Home />} />
             ) : (
               <Route path="/" element={<Login />} />
             )}
-          </Route> */}
-          <Route path="/book" element={<Book />} />
-          <Route path="/" element={<Dashboard />} />
+          </Route>
+          <Route path="/book">
+            {/* <Route element={user.email ? <Book /> : <Login />} /> */}
+            <Route
+              path=":bookName"
+              element={user.email ? <Book /> : <Login />}
+            />
+          </Route>
         </Routes>
       </BrowserRouter>
     </>

@@ -15,11 +15,11 @@ const generateJwt = (id) => {
   });
 };
 
-// @desc    Register new user
-// @route   POST /user/register
-// @access  Public
+// * @desc    Register new user
+// * @route   POST /user/register
+// * @access  Public
 export const registerUser = async (req, res) => {
-  const { username, email, password, confirmPassword } = req.body;
+  const { username, email, password, confirmPassword, role } = req.body;
 
   //checking if any field is empty
   if (!email || !username || !password || !confirmPassword) {
@@ -47,6 +47,7 @@ export const registerUser = async (req, res) => {
           username,
           email,
           password: hashedPassword,
+          role: role,
         });
 
         if (user) {
@@ -65,14 +66,11 @@ export const registerUser = async (req, res) => {
   return res.status(400).json({ message: "Invalid email" });
 };
 
-// @desc    Login  user
-// @route   POST /user/login
-// @access  Public
+// * @desc    Login  user
+// * @route   POST /user/login
+// * @access  Public
 export const login = async (req, res) => {
   const { email, password } = req.body;
-  console.log(email, password);
-  console.log("Hello");
-
   //checking if any field is empty
   if (!email || !password) {
     return res.status(400).json({ message: "Please fill all the fields " });

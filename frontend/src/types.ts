@@ -20,6 +20,28 @@ export interface initialStateType extends Omit<registerType,'confirmPassword'| '
 }
 
 
+export interface reviews {
+    reviewer:string,
+    reviewMessage:string,
+    date:Date,
+    stars:number
+} 
+export interface bookItems {
+    name:string,
+    author:string,
+    payAmount:number,
+    rentAmount:number,
+    imageUrl:string,
+    likes?:number
+    reviews?:reviews[]
+    
+}
+
+export interface book {
+    books:bookItems[]
+}
+
+
 export enum caseEnum {
     LOGIN = "LOGIN",
     REGISTER = "REGISTER",

@@ -18,6 +18,10 @@ const bookSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  imageUrl: {
+    type: String,
+    required: true,
+  },
 
   reviews: [
     {
@@ -26,6 +30,11 @@ const bookSchema = new mongoose.Schema({
         ref: "User",
       },
       reviewMessage: String,
+      date: {
+        type: Date,
+        default: Date.now(),
+      },
+      stars: Number,
     },
   ],
 });
