@@ -1,11 +1,12 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { RootState } from "../app/store";
+import { AppDispatch, RootState } from "../app/store";
 import Navbar from "../components/Navbar";
 import RecommendedBooks from "../components/RecommendedBooks";
 import Reviews from "../components/Reviews";
 import UpArrow from "../components/UpArrow";
+import { buyBook, rentBook } from "../features/user/userSlice";
 
 // const GenerateStars = () => {
 //   return (
@@ -15,6 +16,7 @@ import UpArrow from "../components/UpArrow";
 const Book = () => {
   const { bookName } = useParams();
   const { books } = useSelector((state: RootState) => state.book);
+  const dispatch = useDispatch<AppDispatch>();
 
   //finding the current book
   const currBook = books.filter((b) => b.name === bookName);
@@ -124,17 +126,25 @@ const Book = () => {
                     <span className="title-font font-medium text-2xl text-gray-900">
                       ${currBook[0].payAmount}
                     </span>
-                    <button className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
+                    <Link
+                      onClick={() => dispatch(buyBook(currBook[0].name))}
+                      to={`${currBook[0].name}/buy`}
+                      className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
+                    >
                       Buy
-                    </button>
+                    </Link>
                   </div>
                   <div className="flex">
                     <span className="title-font font-medium text-2xl text-gray-900">
                       ${currBook[0].rentAmount}
                     </span>
-                    <button className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
+                    <Link
+                      onClick={() => dispatch(rentBook(currBook[0].name))}
+                      to={`${currBook[0].name}/rent`}
+                      className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
+                    >
                       Rent
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>

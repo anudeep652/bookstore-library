@@ -1,101 +1,76 @@
-import {  AnyAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { initialStateType, localStorageUser, loginType, registerType } from "../../types";
-import { loginUser, registerUser } from "./userService";
+import { AnyAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { store } from "../../app/store";
 
-const user:localStorageUser = JSON.parse(localStorage.getItem('user') || '{}') 
+import { initialStateUser } from "../../types";
+import { BuyABook, rentABook } from "./userService";
 
-const initialState:initialStateType = {
-    username:user?.username,
-    email:user?.username,
-    isError:false,
-    isSuccess:false,
-    isLoggedIn:false,
-    message:''
-}
+const initialState: initialStateUser = {
+  email: "",
+  username: "",
+  boughtBooks: [],
+  rentedBooks: [],
+};
 
-
-
-
-//register user
-export const register = createAsyncThunk('auth/register',async(data:registerType,thunkAPI) => {
+export const buyBook = createAsyncThunk(
+  "book/buyBook",
+  async (bookName: string, thunkAPI) => {
     try {
-        return await registerUser(data)
-        
-    } catch (error:any) {
-
-        const message =
+      const { token } = store.getState().auth;
+      return await BuyABook(bookName, token || "");
+    } catch (error: any) {
+      const message =
         (error.response &&
           error.response.data &&
           error.response.data.message) ||
         error.message ||
-        error.toString()
-      return thunkAPI.rejectWithValue(message)
-        
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
     }
-})
+  }
+);
 
-//login user
-export const login = createAsyncThunk('auth/login',async(data:loginType,thunkAPI) => {
+export const rentBook = createAsyncThunk(
+  "book/rentBook",
+  async (bookName: string, thunkAPI) => {
     try {
-        return await loginUser(data)
-        
-    } catch (error:any) {
+      const { token } = store.getState().auth;
 
-        const message =
+      return await rentABook(bookName, token || "");
+    } catch (error: any) {
+      const message =
         (error.response &&
           error.response.data &&
           error.response.data.message) ||
         error.message ||
-        error.toString()
-      return thunkAPI.rejectWithValue(message)
-        
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
     }
-})
-
+  }
+);
 export const userSlice = createSlice({
-    name:"user",
-    initialState,
-    reducers : {
-        reset : (state) => {
-            state.isError=false
-            state.isSuccess=false
-            state.message=''
-        },
-        logout : (state) => {
-            localStorage.removeItem('user')
-        }
+  name: "user",
+  initialState,
+  reducers: {
+    setUser: (state, action) => {
+      state.email = action.payload?.email;
+      state.username = action.payload?.username;
     },
-    extraReducers: (builder) => {
-        builder
-        .addCase(register.pending,(state) => {
-            
-        })
-        .addCase(register.fulfilled,(state,action) => {
-            state.email = action.payload.email
-            state.username  = action.payload.username
-            state.isSuccess = true
-            state.isLoggedIn=true
-        })
-        .addCase(register.rejected,(state,action:AnyAction) => {
-          state.isError = true
-          state.message = action?.payload
-        })
-        .addCase(login.pending,(state) => {
-            
-        })
-        .addCase(login.fulfilled,(state,action) => {
-            state.email = action?.payload?.email
-            state.username  = action?.payload?.username
-            state.isSuccess = true
-            state.isError= false
-            state.isLoggedIn=true
-        })
-        .addCase(login.rejected,(state,action:AnyAction) => {
-            state.isError = true
-            state.message=action?.payload
-        })
-    }
-})
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(buyBook.pending, (state, action: AnyAction) => {})
+      .addCase(buyBook.fulfilled, (state, action: AnyAction) => {
+        state.boughtBooks.push(action.payload?.book);
+      })
+      .addCase(buyBook.rejected, (state, action: AnyAction) => {})
 
-export const { reset } = userSlice.actions
-export default userSlice.reducer 
+      .addCase(rentBook.pending, (state, action: AnyAction) => {})
+      .addCase(rentBook.fulfilled, (state, action: AnyAction) => {
+        state.rentedBooks.push(action.payload?.book);
+      })
+      .addCase(rentBook.rejected, (state, action: AnyAction) => {});
+  },
+});
+
+export const { setUser } = userSlice.actions;
+export default userSlice.reducer;

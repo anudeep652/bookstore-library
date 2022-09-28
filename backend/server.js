@@ -6,6 +6,7 @@ import { authorizeUser } from "./middleware/auth.js";
 import userRoutes from "./routes/userRoutes.js";
 import bookRoutes from "./routes/bookRoutes.js";
 import cors from "cors";
+import { buyBook, rentBook } from "./controllers/userController.js";
 
 //initializing express app
 const app = express();
@@ -18,6 +19,8 @@ app.use(cors());
 //routes
 app.use("/user/", userRoutes);
 app.use("/book", bookRoutes);
+app.post("/:bookName/buy", authorizeUser, buyBook);
+app.post("/:bookName/rent", authorizeUser, rentBook);
 
 //database connection
 const connection = async () => {

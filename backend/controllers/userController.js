@@ -2,6 +2,8 @@ import emailValidator from "email-validator";
 import User from "../modals/userSchema.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import Book from "../modals/bookSchema.js";
+import { sendMail } from "../utils/sendMail.js";
 
 //validating email function
 const validateEmail = (email) => {
@@ -90,4 +92,62 @@ export const login = async (req, res) => {
     return res.status(400).json({ message: "Invalid password" });
   }
   return res.status(400).json({ message: "No user with this email found" });
+};
+
+//buy book
+
+// * @desc    Buy a book
+// * @route   POST /:bookName/buy
+// * @access  Private
+export const buyBook = async (req, res) => {
+  const { bookName } = req.params;
+
+  const book = await Book.findOne({ name: bookName });
+  if (!book) return res.status(400).json({ error: "No book found" });
+
+  try {
+    const user = await User.findOne({ _id: req.user._id });
+    user.boughtBooks.push(bookName);
+
+    await user.save();
+    try {
+      sendMail(user, bookName);
+      return res
+        .status(200)
+        .json({ message: "Mail sent successfully", book: bookName });
+    } catch (error) {
+      return res.status(400).json({ error });
+    }
+  } catch (error) {
+    return res.status(400).json({ error: error });
+  }
+};
+
+//rent book
+
+// * @desc    Rent a book
+// * @route   POST /:bookName/rent
+// * @access  Private
+export const rentBook = async (req, res) => {
+  const { bookName } = req.params;
+
+  const book = await Book.findOne({ name: bookName });
+  if (!book) return res.status(400).json({ error: "No book found" });
+
+  try {
+    const user = await User.findOne({ _id: req.user._id });
+    user.rentedBooks.push(bookName);
+
+    await user.save();
+    try {
+      sendMail(user, bookName);
+      return res
+        .status(200)
+        .json({ message: "Mail sent successfully", book: bookName });
+    } catch (error) {
+      return res.status(400).json({ error });
+    }
+  } catch (error) {
+    return res.status(400).json({ error: error });
+  }
 };

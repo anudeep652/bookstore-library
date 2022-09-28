@@ -1,29 +1,21 @@
-import axios from 'axios'
-import { loginType, registerType } from '../../types'
+import axios from "axios";
 
-const URL:string  = process.env.REACT_APP_URL || 'http://localhost:5000'
+const URL = process.env.REACT_APP_REQUEST_URL || "http://localhost:5000";
 
-export const registerUser = async(user:registerType) => {
-    console.log("He")
-    const response = await axios.post(`${URL}/user/register`,user)
-    console.log(response)
+export const BuyABook = async (bookName: string, token: string) => {
+  const response = await axios.post(`${URL}/${bookName}/buy`, bookName, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+};
+export const rentABook = async (bookName: string, token: string) => {
+  const response = await axios.post(`${URL}/${bookName}/rent`, bookName, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
 
-    if (response.data) {
-        localStorage.setItem('user', JSON.stringify(response.data))
-    }
-    
-    return response.data
-
-}
-
-export const loginUser = async(user:loginType) => {
-    const response = await axios.post(`${URL}/user/login`,user)
-
-    if (response.data) {
-        localStorage.setItem('user', JSON.stringify(response.data))
-    }
-
-    return response.data
-
-}
-
+  return response.data;
+};

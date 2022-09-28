@@ -3,14 +3,11 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-// import FormControlLabel from "@mui/material/FormControlLabel";
-// import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Alert from "@mui/material/Alert";
 import { Collapse, Paper } from "@mui/material";
@@ -19,10 +16,9 @@ import IconButton from "@mui/material/IconButton";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { caseEnum, registerType } from "../types";
 import { useDispatch, useSelector } from "react-redux";
-import { login, register, reset } from "../features/user/userSlice";
+import { login, register, reset } from "../features/auth/authSlice";
 import { AppDispatch } from "../app/store";
 import { RootState } from "../app/store";
-import { fontWeight } from "@mui/system";
 
 type prop = {
   formCase: string;
@@ -56,7 +52,7 @@ const Form = ({ formCase }: prop) => {
 
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const { isError, message, isSuccess } = useSelector(
+  const { isError, message, isSuccess, email, username } = useSelector(
     (state: RootState) => state.auth
   );
 
@@ -130,7 +126,7 @@ const Form = ({ formCase }: prop) => {
             md={7}
             sx={{
               backgroundImage:
-                "url(https://thumbs.dreamstime.com/b/open-book-profit-icons-above-close-up-hd-video-big-concept-221172255.jpg)",
+                "url(https://images.unsplash.com/photo-1532012197267-da84d127e765?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8Ym9va3N0b3JlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60)",
               backgroundRepeat: "no-repeat",
               backgroundColor: (t) =>
                 t.palette.mode === "light"
@@ -159,8 +155,9 @@ const Form = ({ formCase }: prop) => {
                     fontWeight: 500,
                     paddingBottom: 1,
                     fontFamily: "Josefin Sans",
-                    color: "#24FF00",
+                    // color: "#24FF00",
                   }}
+                  className="text-indigo-600"
                 >
                   Bookstore Library
                 </Typography>
@@ -283,8 +280,7 @@ const Form = ({ formCase }: prop) => {
                   sx={{
                     mt: 3,
                     mb: 2,
-                    backgroundColor: "#16A000",
-                    ":hover": { backgroundColor: "#16A000" },
+                    backgroundColor: "rgb(79 ,70 ,229)",
                   }}
                 >
                   {formCase === caseEnum.REGISTER ? "Sign up" : "Login"}

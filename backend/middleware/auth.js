@@ -3,15 +3,17 @@ import User from "../modals/userSchema.js";
 
 export const authorizeUser = async (req, res, next) => {
   let token;
+  console.log("hello");
 
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith("Bearer")
   ) {
     try {
+      console.log("token is there?");
       // Get token from header
       token = req.headers.authorization.split(" ")[1];
-
+      console.log(token);
       // Verify token
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
@@ -23,10 +25,11 @@ export const authorizeUser = async (req, res, next) => {
       console.log(error);
       return res.status(401).json({ error: "Not authorized" });
     }
+  } else {
+    return res.status(401).json({ error: "Not authorized, no token" });
   }
 
   if (!token) {
-    return;
-    res.status(401).json({ error: "Not authorized, no token" });
+    return res.status(401).json({ error: "Not authorized, no token" });
   }
 };

@@ -19,8 +19,14 @@ export interface initialStateType
   isSuccess: boolean;
   message: string;
   isLoggedIn: boolean;
+  token: string | null;
 }
 
+export interface initialStateUser
+  extends Pick<initialStateType, "username" | "email"> {
+  boughtBooks: string[];
+  rentedBooks: string[];
+}
 export interface reviews {
   reviewer: string;
   reviewMessage: string;

@@ -5,13 +5,16 @@ import { AppDispatch, RootState } from "../app/store";
 import Navbar from "../components/Navbar";
 import UpArrow from "../components/UpArrow";
 import { getBooks } from "../features/books/bookSlice";
+import { buyBook, rentBook, setUser } from "../features/user/userSlice";
 
 const Home = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { books } = useSelector((state: RootState) => state.book);
+  const { username, email } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
     dispatch(getBooks());
+    dispatch(setUser({ username, email }));
   }, [dispatch]);
   return (
     <>
@@ -48,17 +51,29 @@ const Home = () => {
                 <span className="title-font font-medium text-2xl text-gray-900">
                   ${book.payAmount}
                 </span>
-                <button className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
+                {/* <button> */}
+                <Link
+                  onClick={() => dispatch(buyBook(book.name))}
+                  to={`/${book.name}/buy`}
+                  className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
+                >
                   Buy
-                </button>
+                </Link>
+                {/* </button> */}
               </div>
               <div className="flex">
                 <span className="title-font font-medium text-2xl text-gray-900">
                   ${book.rentAmount}
                 </span>
-                <button className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
+                {/* <button> */}
+                <Link
+                  onClick={() => dispatch(rentBook(book.name))}
+                  to={`${book.name}/rent`}
+                  className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
+                >
                   Rent
-                </button>
+                </Link>
+                {/* </button> */}
               </div>
             </div>
           </div>
