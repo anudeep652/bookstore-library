@@ -1,12 +1,17 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { RootState } from "../app/store";
 import Navbar from "../components/Navbar";
 import RecommendedBooks from "../components/RecommendedBooks";
 import Reviews from "../components/Reviews";
 import UpArrow from "../components/UpArrow";
 
+// const GenerateStars = () => {
+//   return (
+
+//   )
+// }
 const Book = () => {
   const { bookName } = useParams();
   const { books } = useSelector((state: RootState) => state.book);
@@ -14,6 +19,41 @@ const Book = () => {
   //finding the current book
   const currBook = books.filter((b) => b.name === bookName);
   console.log(currBook);
+
+  let starsArr: number[] = [];
+  let count = currBook[0]?.stars || 0;
+  for (let i = 0; i < count; i++) {
+    starsArr.push(1);
+  }
+  console.log(starsArr);
+
+  //return the remaining no of stars without likes
+  const remStars = () => {
+    if (starsArr.length !== 5) {
+      console.log(starsArr.length);
+      let count = 5 - starsArr.length;
+      starsArr.splice(0, starsArr.length);
+      console.log(starsArr);
+      for (let i = 0; i < count; i++) {
+        starsArr.push(i);
+      }
+      console.log(starsArr);
+      return starsArr.map((s) => (
+        <svg
+          key={s}
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          className="w-4 h-4 text-indigo-500"
+          viewBox="0 0 24 24"
+        >
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+        </svg>
+      ));
+    }
+  };
 
   return (
     <>
@@ -46,83 +86,38 @@ const Book = () => {
                   >
                     {currBook[0].name}
                   </p>
-                  <h1
-                    className="text-lg title-font text-gray-500 tracking-widest capitalize"
-                    style={{ cursor: "auto" }}
+                  <Link
+                    to={`/author/${currBook[0].author}`}
+                    className="text-lg title-font text-gray-500 tracking-widest capitalize  hover:underline"
+                    style={{ cursor: "pointer" }}
                   >
                     {currBook[0].author}
-                  </h1>
+                  </Link>
                   <div className="flex mb-4">
                     <span className="flex items-center">
-                      <svg
-                        fill="currentColor"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        className="w-4 h-4 text-indigo-500"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                      </svg>
-                      <svg
-                        fill="currentColor"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        className="w-4 h-4 text-indigo-500"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                      </svg>
-                      <svg
-                        fill="currentColor"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        className="w-4 h-4 text-indigo-500"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                      </svg>
-                      <svg
-                        fill="currentColor"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        className="w-4 h-4 text-indigo-500"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                      </svg>
-                      <svg
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        className="w-4 h-4 text-indigo-500"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                      </svg>
-                      <span className="text-gray-600 ml-3">20 Reviews</span>
+                      {starsArr.map((s) => (
+                        <svg
+                          key={s}
+                          fill="currentColor"
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          className="w-4 h-4 text-indigo-500"
+                          viewBox="0 0 24 24"
+                        >
+                          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                        </svg>
+                      ))}
+                      {remStars()}
+
+                      <span className="text-gray-600 ml-3">
+                        {currBook[0].reviews?.length} reviews
+                      </span>
                     </span>
                   </div>
                   <h2 className="leading-relaxed text-lg">
-                    No one’s captured the free association and imagination of
-                    childhood quite the way Watterson has. It slams you with
-                    some serious, but healthy, nostalgia, regardless of whether
-                    or not you grew up in the same situation as Calvin. There’s
-                    also a serious case for Calvin and Hobbes being a collection
-                    of short stories instead of comic strips, what with
-                    continuity and storylines that run for multiple strips. If
-                    you haven’t read it at all or if it’s been a few years, pick
-                    up a copy. You’ll be surprised at how profound the comic can
-                    be in its simplicity and just how dated it isn’t
+                    {currBook[0].description}
                   </h2>
                   <div className="flex mt-5 items-center pb-5 border-b-2 border-gray-100 mb-5"></div>
                   <div className="flex mb-6">

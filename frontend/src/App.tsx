@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./app/store";
 import { reset } from "./features/user/userSlice";
 import Book from "./pages/Book";
+import Author from "./pages/Author";
 
 function App() {
   const user = JSON.parse(localStorage.getItem("user") || "{}");
@@ -28,6 +29,7 @@ function App() {
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
           </Route>
+
           <Route path="/">
             {user.email ? (
               <Route path="/" element={<Home />} />
@@ -35,13 +37,18 @@ function App() {
               <Route path="/" element={<Login />} />
             )}
           </Route>
+
           <Route path="/book">
-            {/* <Route element={user.email ? <Book /> : <Login />} /> */}
             <Route
               path=":bookName"
               element={user.email ? <Book /> : <Login />}
             />
           </Route>
+
+          <Route
+            path="/author/:authorName"
+            element={user.email ? <Author /> : <Login />}
+          />
         </Routes>
       </BrowserRouter>
     </>

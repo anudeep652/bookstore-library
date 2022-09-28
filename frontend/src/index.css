@@ -38,10 +38,6 @@ svg {
   opacity: 10;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 @media (max-width: 400px) {
   .uparrow {
     right: 10px;

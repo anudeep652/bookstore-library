@@ -1,5 +1,5 @@
 import { AnyAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { book, bookItems } from "../../types";
+import { book } from "../../types";
 import { getAllBooks } from "./bookService";
 
 const initialState: book = {
@@ -10,6 +10,7 @@ const initialState: book = {
       payAmount: 10,
       rentAmount: 100,
       imageUrl: "",
+      description: "",
     },
   ],
 };
@@ -37,7 +38,14 @@ export const bookSlice = createSlice({
   reducers: {
     reset: (state) => {
       state.books = [
-        { name: "", author: "", payAmount: 0, rentAmount: 0, imageUrl: "" },
+        {
+          name: "",
+          author: "",
+          payAmount: 0,
+          rentAmount: 0,
+          imageUrl: "",
+          description: "",
+        },
       ];
     },
   },

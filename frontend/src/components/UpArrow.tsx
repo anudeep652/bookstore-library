@@ -1,48 +1,48 @@
 import React, { useEffect, useState } from "react";
 import KeyboardArrowUpTwoToneIcon from "@mui/icons-material/KeyboardArrowUpTwoTone";
+import { useParams } from "react-router-dom";
 
+interface scrollStatus {
+  scrollDirection: string | null;
+  scrollPos: number;
+}
 const UpArrow = () => {
-  const [showArrow, setShowArrow] = useState(false);
-  const [scrollDir, setScrollDir] = useState("scrolling down");
+  const { bookName } = useParams();
+  const [scrollStatus, setScrollStatus] = useState<scrollStatus>({
+    scrollDirection: null,
+    scrollPos: 0,
+  });
 
   useEffect(() => {
-    const threshold = 0;
-    let lastScrollY = window.pageYOffset;
-    let ticking = false;
+    window.scrollTo(0, 0);
+    window.addEventListener("scroll", handleScrollDocument);
 
-    const updateScrollDir = () => {
-      const scrollY = window.pageYOffset;
+    return () => window.removeEventListener("scroll", handleScrollDocument);
+  }, [bookName]);
 
-      if (Math.abs(scrollY - lastScrollY) < threshold) {
-        ticking = false;
-        return;
-      }
-      scrollY > lastScrollY ? setShowArrow(true) : setShowArrow(false);
-      setScrollDir(scrollY > lastScrollY ? "scrolling down" : "scrolling up");
-      lastScrollY = scrollY > 0 ? scrollY : 0;
-      ticking = false;
-    };
+  function handleScrollDocument() {
+    setScrollStatus((prev) => {
+      // to get 'previous' value of state
 
-    const onScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(updateScrollDir);
-        ticking = true;
-      }
-    };
+      return {
+        scrollDirection:
+          document.body.getBoundingClientRect().top > prev.scrollPos
+            ? "up"
+            : "down",
 
-    window.addEventListener("scroll", onScroll);
-    // console.log(scrollDir);
+        scrollPos: document.body.getBoundingClientRect().top,
+      };
+    });
+  }
 
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [scrollDir]);
   return (
     <>
-      {showArrow && (
+      {scrollStatus.scrollDirection === "down" && (
         <a href="#navbar">
           <KeyboardArrowUpTwoToneIcon
             className="uparrow"
             onClick={() => {
-              window.scrollTo(0, 0);
+              window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
             }}
             fontSize="large"
           />

@@ -32,17 +32,13 @@ const Home = () => {
                 {book.name}
               </div>
               <Link
-                to={`/author/author`}
+                to={`/author/${book.author}`}
                 className="block mt-1 text-lg leading-tight capitalize font-medium text-black hover:underline"
               >
                 {book.author}
               </Link>
               <p className="mt-2 text-slate-500 read-more text-lg">
-                {/* {book.} */}
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos,
-                molestiae! Lorem, ipsum dolor sit amet consectetur adipisicing
-                elit. Ipsam animi, maiores quam reprehenderit amet ab molestiae?
-                Itaque consequuntur eum velit?
+                {book.description}
               </p>
               <Link to={`/book/${book.name}`} className="read-more-link">
                 see more about this book
