@@ -4,8 +4,12 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { AppDispatch, RootState } from "../app/store";
 import Navbar from "../components/Navbar";
 import { writeReview } from "../features/books/bookSlice";
+import StarRating from "../components/StarRating";
+import UpArrow from "../components/UpArrow";
 
 const Review = () => {
+  const [stars, setStars] = useState(0);
+
   const { bookName } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
@@ -18,10 +22,13 @@ const Review = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     let data = {
       bookName: bookName || "",
       review: reviewFields,
+      stars: stars,
     };
+    console.log(data);
     dispatch(writeReview(data));
     navigate(`/book/${bookName}`);
   };
@@ -160,8 +167,9 @@ const Review = () => {
 
       {/* write review */}
 
-      <section className="bg-inherit">
+      <section className="bg-inherit relative">
         <div className="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
+          <StarRating dataPasser={setStars} />
           <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-center text-indigo-600 ">
             Reviewing the book "{currBook[0].name}"
           </h2>
@@ -221,6 +229,7 @@ const Review = () => {
           </form>
         </div>
       </section>
+      <UpArrow />
     </>
   );
 };

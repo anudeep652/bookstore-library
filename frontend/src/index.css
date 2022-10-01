@@ -52,6 +52,15 @@ svg {
   .nf {
     margin-bottom: 5em;
   }
+  .star-container {
+    display: flex;
+    gap: 0.2em;
+    position: absolute;
+    bottom: 8%;
+
+    right: 7%;
+    font-size: 0.9em;
+  }
 }
 
 @media (min-width: 400px) {
@@ -60,5 +69,12 @@ svg {
   }
   .shgv {
     width: 100%;
+  }
+  .star-container {
+    gap: 0.5em;
+    display: flex;
+    position: absolute;
+    bottom: 15%;
+    right: 30%;
   }
 }

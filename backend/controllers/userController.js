@@ -156,7 +156,7 @@ export const rentBook = async (req, res) => {
 
 // { bookName:String,subject:String,message:string}
 export const review = async (req, res) => {
-  const { bookName, review } = req.body;
+  const { bookName, review, stars } = req.body;
   console.log(req.body);
   const book = await Book.findOne({ name: bookName });
   const user = await User.findOne({ username: req.user.username });
@@ -165,6 +165,7 @@ export const review = async (req, res) => {
       reviewer: req.user.username,
       subject: review.subject,
       message: review.message,
+      stars: stars,
     });
 
     user.reviewsMade.push({
@@ -175,19 +176,17 @@ export const review = async (req, res) => {
 
     await book.save();
     await user.save();
-    return res
-      .status(200)
-      .json({
-        message: "Successfully reviewed",
-        bookName,
-        review: {
-          date: new Date().toLocaleDateString(),
-          message: review.message,
-          reviewer: user.username,
-          subject: review.subject,
-          stars: 0,
-        },
-      });
+    return res.status(200).json({
+      message: "Successfully reviewed",
+      bookName,
+      review: {
+        date: new Date().toLocaleDateString(),
+        message: review.message,
+        reviewer: user.username,
+        subject: review.subject,
+        stars: stars,
+      },
+    });
   } catch (error) {
     return res.status(400).json({ error: error });
   }

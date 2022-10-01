@@ -41,12 +41,13 @@ export const writeReview = createAsyncThunk(
     data: {
       bookName: string;
       review: { subject: string; message: string };
+      stars: number;
     },
     thunkAPI
   ) => {
     try {
       const { token } = store.getState().auth;
-      return await review(data.bookName, token || "", data?.review);
+      return await review(data.bookName, token || "", data?.review, data.stars);
     } catch (error: any) {
       const message =
         (error.response &&

@@ -9,11 +9,12 @@ export const getAllBooks = async () => {
 export const review = async (
   bookName: string,
   token: string,
-  review: { subject: string; message: string }
+  review: { subject: string; message: string },
+  stars: number
 ) => {
   const response = await axios.post(
     `${URL}/${bookName}/writeReview`,
-    { bookName, review },
+    { bookName, review, stars },
     {
       headers: {
         authorization: `Bearer ${token}`,
