@@ -1,25 +1,25 @@
-import React, { useState } from "react";
-import MenuIcon from "@mui/icons-material/Menu";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../app/store";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Link } from "react-router-dom";
-import { logout } from "../features/auth/authSlice";
-// <a href="https://www.flaticon.com/free-icons/user" title="user icons">User icons created by kmg design - Flaticon</a>
 
 const navigation = [
-  { name: "Home", href: "#", current: true },
-  { name: "My books", href: "#", current: false },
-  { name: "Rented books", href: "#", current: false },
-  { name: "My transactions", href: "#", current: false },
+  { name: "Home", href: "/", current: true },
+  { name: "My Library", href: "/mybooks", current: false },
+  { name: "About", href: "/about", current: false },
+  { name: "Contact", href: "/contact", current: false },
 ];
 
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(" ");
 }
-const Navbar = () => {
+
+type navtype = "Home" | "My Library" | "Contact" | "About";
+
+const Navbar = ({ name }: { name?: navtype }) => {
   const { username } = useSelector((state: RootState) => state.auth);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   return (
     <>
@@ -75,20 +75,20 @@ const Navbar = () => {
                 <div className="absolute mt-0 inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                   <div className="hidden sm:ml-6 sm:block">
                     <div className="flex space-x-4 ">
-                      {navigation.map((item) => (
-                        <a
-                          key={item.name}
-                          href={item.href}
+                      {navigation.map((item, index) => (
+                        <Link
+                          key={item.href}
+                          to={item.href}
                           className={classNames(
-                            item.current
+                            item.name === name
                               ? "bg-gray-900 text-white"
                               : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                            "px-3 py-2 rounded-md text-xl font-medium"
+                            "px-3 py-2 rounded-md text-xl font-medium capitalize"
                           )}
                           aria-current={item.current ? "page" : undefined}
                         >
                           {item.name}
-                        </a>
+                        </Link>
                       ))}
                     </div>
                   </div>
@@ -102,12 +102,12 @@ const Navbar = () => {
 
                   {/* Profile dropdown */}
                   {username ? (
-                    <Menu as="div" className="relative ml-3">
+                    <Menu as="div" className="relative ">
                       <div>
-                        <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 ml-10 mr-5 ">
+                        <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 ml-10 mr-2 ">
                           <span className="sr-only">Open user menu</span>
                           <img
-                            className="h-8 w-8 rounded-full outline-none "
+                            className="h-8 w-8 rounded-full outline-none"
                             src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                             alt=""
                           />
@@ -162,16 +162,16 @@ const Navbar = () => {
                           </Menu.Item>
                           <Menu.Item>
                             {({ active }) => (
-                              <a
+                              <Link
                                 onClick={() => {}}
-                                href="/logout"
+                                to="/logout"
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
                                   "block px-4 py-2 text-sm text-gray-700 w-100"
                                 )}
                               >
                                 Sign out
-                              </a>
+                              </Link>
                             )}
                           </Menu.Item>
                         </Menu.Items>
@@ -189,20 +189,21 @@ const Navbar = () => {
             <Disclosure.Panel className="sm:hidden">
               <div className="space-y-1 px-2 pt-2 pb-3">
                 {navigation.map((item) => (
-                  <Disclosure.Button
-                    key={item.name}
-                    as="a"
-                    href={item.href}
-                    className={classNames(
-                      item.current
-                        ? "bg-gray-900 text-white"
-                        : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                      "block px-3 py-2 rounded-md text-base font-medium"
-                    )}
-                    aria-current={item.current ? "page" : undefined}
-                  >
-                    {item.name}
-                  </Disclosure.Button>
+                  <Link to={item.href}>
+                    <Disclosure.Button
+                      key={item.name}
+                      as="a"
+                      className={classNames(
+                        item.current
+                          ? "bg-gray-900 text-white"
+                          : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                        "block px-3 py-2 rounded-md text-base font-medium capitalize"
+                      )}
+                      aria-current={item.current ? "page" : undefined}
+                    >
+                      {item.name}
+                    </Disclosure.Button>
+                  </Link>
                 ))}
               </div>
             </Disclosure.Panel>

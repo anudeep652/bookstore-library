@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { reviews } from "../types";
+import moment, { Moment } from "moment";
 
-const Reviews = () => {
+const Reviews = ({ reviewsArr }: { reviewsArr: reviews[] }) => {
   const [menu, setMenu] = useState(true);
   const [menu1, setMenu1] = useState(false);
 
@@ -15,16 +17,16 @@ const Reviews = () => {
               Reviews
             </p>
           </div>
-          {reviews.length > 0 ? (
-            reviews.map((n) => (
+          {reviewsArr.length > 0 ? (
+            reviewsArr.map((n) => (
               <div
                 className="w-full flex justify-start items-start flex-col bg-gray-50 p-8"
-                key={n}
+                key={n.reviewer}
               >
                 <div className="flex flex-col md:flex-row justify-between w-full ">
                   <div className="flex flex-row justify-between items-start">
                     <p className="text-xl md:text-2xl font-medium leading-normal text-gray-800">
-                      Beautiful addition to the theme
+                      {n.subject}
                     </p>
                     <button
                       onClick={() => setMenu(!menu)}
@@ -130,26 +132,24 @@ const Reviews = () => {
                   </div>
                 </div>
                 <div className={"md:block " + (menu ? "block" : "hidden")}>
-                  <p className="mt-3 text-base leading-normal text-gray-600 w-full md:w-9/12 xl:w-5/6">
-                    When you want to decorate your home, the idea of choosing a
-                    decorative theme can seem daunting. Some themes seem to have
-                    an endless amount of pieces, while others can feel hard to
-                    accomplish
+                  <p className="mt-3 text-base leading-normal text-gray-600 w-full md:w-9/12 xl:w-5/6 shgv">
+                    {n.message}
                   </p>
 
                   <div className="mt-6 flex justify-start items-center flex-row space-x-2.5">
                     <div>
                       <img
-                        src="https://i.ibb.co/QcqyrVG/Mask-Group.png"
+                        className="h-8 w-8 rounded-full outline-none"
+                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                         alt="girl-avatar"
                       />
                     </div>
                     <div className="flex flex-col justify-start items-start space-y-2">
                       <p className="text-base font-medium leading-none text-gray-800">
-                        Anna Kendrick
+                        {n.reviewer}
                       </p>
                       <p className="text-sm leading-none text-gray-600">
-                        14 July 2021
+                        {n.date?.slice(0, 10).split("-").reverse().join("/")}
                       </p>
                     </div>
                   </div>

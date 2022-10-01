@@ -9,6 +9,11 @@ import { logout, reset } from "./features/auth/authSlice";
 import Book from "./pages/Book";
 import Author from "./pages/Author";
 import ThankYouPage from "./pages/ThankYouPage";
+import Contact from "./pages/Contact";
+import MyBooks from "./pages/MyBooks";
+import NotFound from "./pages/NotFound";
+import About from "./pages/About";
+import Review from "./pages/Review";
 
 const Logout = () => {
   const dispatch = useDispatch();
@@ -68,10 +73,28 @@ function App() {
               path=":bookName/rent"
               element={user.email ? <ThankYouPage mode="rent" /> : <Login />}
             />
-
-            {/* logout route */}
-            <Route path="/logout" element={<Logout />} />
           </Route>
+
+          {/* My books */}
+          <Route
+            path="/mybooks"
+            element={user.email ? <MyBooks /> : <Login />}
+          />
+
+          {/*write review */}
+          <Route path="/:bookName/writeReview" element={<Review />} />
+
+          {/* logout route */}
+          <Route path="/logout" element={<Logout />} />
+
+          {/* contact route */}
+          <Route path="/contact" element={<Contact />} />
+
+          {/* About page */}
+          <Route path="/about" element={<About />} />
+
+          {/* 404 not found */}
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </>

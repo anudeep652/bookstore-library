@@ -10,10 +10,8 @@ export const authorizeUser = async (req, res, next) => {
     req.headers.authorization.startsWith("Bearer")
   ) {
     try {
-      console.log("token is there?");
       // Get token from header
       token = req.headers.authorization.split(" ")[1];
-      console.log(token);
       // Verify token
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 

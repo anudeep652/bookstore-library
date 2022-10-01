@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema(
       required: true,
       type: String,
     },
-    reviewsMade: { type: mongoose.Schema.Types.ObjectId, ref: "Book" },
+    reviewsMade: [{ bookName: String, subject: String, message: String }],
     boughtBooks: [String],
     rentedBooks: [String],
   },

@@ -38,8 +38,27 @@ svg {
   opacity: 10;
 }
 
+.mystyle {
+  margin-left: 10em;
+}
 @media (max-width: 400px) {
   .uparrow {
     right: 10px;
+  }
+  .mystyle {
+    margin-left: auto;
+    text-align: center;
+  }
+  .nf {
+    margin-bottom: 5em;
+  }
+}
+
+@media (min-width: 400px) {
+  .nf {
+    margin-bottom: 25em;
+  }
+  .shgv {
+    width: 100%;
   }
 }

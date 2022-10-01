@@ -6,7 +6,12 @@ import { authorizeUser } from "./middleware/auth.js";
 import userRoutes from "./routes/userRoutes.js";
 import bookRoutes from "./routes/bookRoutes.js";
 import cors from "cors";
-import { buyBook, rentBook } from "./controllers/userController.js";
+import {
+  buyBook,
+  contact,
+  rentBook,
+  review,
+} from "./controllers/userController.js";
 
 //initializing express app
 const app = express();
@@ -14,13 +19,15 @@ const PORT = process.env.PORT || 5000;
 
 //middle wares
 app.use(express.json());
-app.use(cors());
+app.use(cors({ origin: process.env.FRONTEND_URL }));
 
 //routes
 app.use("/user/", userRoutes);
 app.use("/book", bookRoutes);
 app.post("/:bookName/buy", authorizeUser, buyBook);
 app.post("/:bookName/rent", authorizeUser, rentBook);
+app.post("/:bookName/writeReview", authorizeUser, review);
+app.post("/contact", contact);
 
 //database connection
 const connection = async () => {

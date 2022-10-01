@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { login, register, reset } from "../features/auth/authSlice";
 import { AppDispatch } from "../app/store";
 import { RootState } from "../app/store";
+import { logout } from "../features/user/userSlice";
 
 type prop = {
   formCase: string;
@@ -95,6 +96,7 @@ const Form = ({ formCase }: prop) => {
 
   useEffect(() => {
     setEmptyFieldsError(false);
+    dispatch(logout());
     setErrorMessage("");
     if (!isError && isSuccess && message === "") {
       navigate("/", { replace: true });
@@ -292,7 +294,7 @@ const Form = ({ formCase }: prop) => {
                     </Link>
                   </Grid> */}
                   <Grid item>
-                    <Link href="#" variant="body2">
+                    <Link variant="body2">
                       <RouterLink
                         to={
                           formCase === caseEnum.REGISTER

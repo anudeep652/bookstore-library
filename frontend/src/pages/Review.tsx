@@ -1,64 +1,29 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { AppDispatch, RootState } from "../app/store";
 import Navbar from "../components/Navbar";
-import RecommendedBooks from "../components/RecommendedBooks";
-import Reviews from "../components/Reviews";
-import UpArrow from "../components/UpArrow";
-import { buyBook, rentBook } from "../features/user/userSlice";
-import CreateIcon from "@mui/icons-material/Create";
-import { setReviews } from "../features/books/bookSlice";
+import { writeReview } from "../features/books/bookSlice";
 
-const Book = () => {
+const Review = () => {
   const { bookName } = useParams();
-  const { books } = useSelector((state: RootState) => state.book);
-  const { boughtBooks, rentedBooks } = useSelector(
-    (state: RootState) => state.user
-  );
+  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const { username } = useSelector((state: RootState) => state.auth);
-
-  //finding the current book
+  const { books } = useSelector((state: RootState) => state.book);
   const currBook = books.filter((b) => b.name === bookName);
-  console.log(currBook);
+  const [reviewFields, setReviewFields] = useState({
+    subject: "",
+    message: "",
+  });
 
-  let starsArr: number[] = [];
-  let count = currBook[0]?.stars || 0;
-  for (let i = 0; i < count; i++) {
-    starsArr.push(1);
-  }
-  console.log(starsArr);
-  useEffect(() => {
-    dispatch(setReviews());
-  }, []);
-
-  //return the remaining no of stars without likes
-  const remStars = () => {
-    if (starsArr.length !== 5) {
-      console.log(starsArr.length);
-      let count = 5 - starsArr.length;
-      starsArr.splice(0, starsArr.length);
-      console.log(starsArr);
-      for (let i = 0; i < count; i++) {
-        starsArr.push(i);
-      }
-      console.log(starsArr);
-      return starsArr.map((s) => (
-        <svg
-          key={s}
-          fill="none"
-          stroke="currentColor"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-          className="w-4 h-4 text-indigo-500"
-          viewBox="0 0 24 24"
-        >
-          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-        </svg>
-      ));
-    }
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    let data = {
+      bookName: bookName || "",
+      review: reviewFields,
+    };
+    dispatch(writeReview(data));
+    navigate(`/book/${bookName}`);
   };
 
   return (
@@ -99,7 +64,7 @@ const Book = () => {
                   >
                     {currBook[0].author}
                   </Link>
-                  <div className="flex mb-4">
+                  {/* <div className="flex mb-4">
                     <span className="flex items-center">
                       {starsArr.map((s) => (
                         <svg
@@ -118,18 +83,15 @@ const Book = () => {
                       {remStars()}
 
                       <span className="text-gray-600 ml-3">
-                        {currBook[0].reviews?.length}{" "}
-                        {currBook[0].reviews?.length === 1
-                          ? "review"
-                          : "reviews"}
+                        {currBook[0].reviews?.length} reviews
                       </span>
                     </span>
-                  </div>
+                  </div> */}
                   <h2 className="leading-relaxed text-lg">
                     {currBook[0].description}
                   </h2>
                   <div className="flex mt-5 items-center pb-5 border-b-2 border-gray-100 mb-5"></div>
-                  {boughtBooks.some(
+                  {/* {boughtBooks.some(
                     (bookName) => bookName === currBook[0].name
                   ) ||
                   rentedBooks.some(
@@ -188,19 +150,79 @@ const Book = () => {
                         </Link>
                       </div>
                     </>
-                  )}
+                  )} */}
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      {/* Reviews */}
-      <Reviews reviewsArr={currBook[0]?.reviews || []} />
-      <RecommendedBooks />
-      <UpArrow />
+
+      {/* write review */}
+
+      <section className="bg-inherit">
+        <div className="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
+          <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-center text-indigo-600 ">
+            Reviewing the book "{currBook[0].name}"
+          </h2>
+
+          <form className="space-y-8" onSubmit={handleSubmit}>
+            <div>
+              <label
+                htmlFor="subject"
+                className="block mb-2 text-sm font-medium text-black "
+              >
+                Subject
+              </label>
+              <input
+                type="text"
+                id="subject"
+                name="subject"
+                value={reviewFields.subject}
+                onChange={(e) =>
+                  setReviewFields({
+                    ...reviewFields,
+                    [e.target.name]: e.target.value,
+                  })
+                }
+                className="block p-3 w-full text-sm text-black bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
+                required
+                placeholder="subject"
+              />
+            </div>
+            <div className="sm:col-span-2">
+              <label
+                htmlFor="message"
+                className="block mb-2 text-sm font-medium text-black dark:text-black"
+              >
+                Your Review message
+              </label>
+              <textarea
+                name="message"
+                value={reviewFields.message}
+                onChange={(e) =>
+                  setReviewFields({
+                    ...reviewFields,
+                    [e.target.name]: e.target.value,
+                  })
+                }
+                id="message"
+                rows={6}
+                className="block p-2.5 w-full text-sm text-black bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:placeholder-gray-400  dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                placeholder="Leave a message..."
+              />
+            </div>
+            <button
+              type="submit"
+              className="py-3 px-5 text-sm font-medium text-center  rounded-lg first-letter:sm:w-fit hover:bg-indigo-600 hover:text-white"
+            >
+              Submit
+            </button>
+          </form>
+        </div>
+      </section>
     </>
   );
 };
 
-export default Book;
+export default Review;

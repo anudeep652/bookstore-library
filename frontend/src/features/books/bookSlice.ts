@@ -1,6 +1,8 @@
+import { ActionTypes } from "@mui/base";
 import { AnyAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { store } from "../../app/store";
 import { book } from "../../types";
-import { getAllBooks } from "./bookService";
+import { getAllBooks, review } from "./bookService";
 
 const initialState: book = {
   books: [
@@ -32,6 +34,32 @@ export const getBooks = createAsyncThunk(
   }
 );
 
+// write review
+export const writeReview = createAsyncThunk(
+  "user/writeReview",
+  async (
+    data: {
+      bookName: string;
+      review: { subject: string; message: string };
+    },
+    thunkAPI
+  ) => {
+    try {
+      const { token } = store.getState().auth;
+      return await review(data.bookName, token || "", data?.review);
+    } catch (error: any) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      console.log(message);
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const bookSlice = createSlice({
   name: "book",
   initialState,
@@ -48,6 +76,14 @@ export const bookSlice = createSlice({
         },
       ];
     },
+    setReviews: (state) => {
+      const review = JSON.parse(localStorage.getItem("review") || "{}");
+      if (review.bookName) {
+        state.books.forEach(
+          (b) => b.name === review.bookName && b.reviews?.push(review.review)
+        );
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -55,9 +91,18 @@ export const bookSlice = createSlice({
       .addCase(getBooks.fulfilled, (state, action: AnyAction) => {
         state.books = action.payload?.books;
       })
-      .addCase(getBooks.rejected, (state, action: AnyAction) => {});
+      .addCase(getBooks.rejected, (state, action: AnyAction) => {})
+      .addCase(writeReview.pending, (state, action: AnyAction) => {})
+      .addCase(writeReview.fulfilled, (state, action: AnyAction) => {
+        state.books.forEach(
+          (b) =>
+            b.name === action.payload.bookName &&
+            b.reviews?.push(action.payload.review)
+        );
+      })
+      .addCase(writeReview.rejected, (state, action: AnyAction) => {});
   },
 });
 
-export const { reset } = bookSlice.actions;
+export const { reset, setReviews } = bookSlice.actions;
 export default bookSlice.reducer;

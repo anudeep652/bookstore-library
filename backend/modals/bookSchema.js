@@ -30,15 +30,19 @@ const bookSchema = new mongoose.Schema({
   reviews: [
     {
       reviewer: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        type: String,
+        required: true,
       },
-      reviewMessage: String,
+      subject: String,
+      message: String,
       date: {
         type: Date,
         default: Date.now(),
       },
-      stars: Number,
+      stars: {
+        type: Number,
+        default: 0,
+      },
     },
   ],
 });

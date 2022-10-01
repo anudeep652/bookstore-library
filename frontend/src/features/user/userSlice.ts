@@ -1,21 +1,25 @@
 import { AnyAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { store } from "../../app/store";
 
-import { initialStateUser } from "../../types";
-import { BuyABook, rentABook } from "./userService";
+import { initialStateUser, localStorageUser } from "../../types";
+import { BuyABook, contact, rentABook } from "./userService";
+
+const user: localStorageUser = JSON.parse(localStorage.getItem("user") || "{}");
 
 const initialState: initialStateUser = {
-  email: "",
-  username: "",
-  boughtBooks: [],
-  rentedBooks: [],
+  email: user?.email,
+  username: user?.username,
+  boughtBooks: user?.boughtBooks,
+  rentedBooks: user?.rentedBooks,
 };
 
+// buy a book
 export const buyBook = createAsyncThunk(
-  "book/buyBook",
+  "user/buyBook",
   async (bookName: string, thunkAPI) => {
     try {
       const { token } = store.getState().auth;
+
       return await BuyABook(bookName, token || "");
     } catch (error: any) {
       const message =
@@ -29,12 +33,13 @@ export const buyBook = createAsyncThunk(
   }
 );
 
+// Rent a book
 export const rentBook = createAsyncThunk(
-  "book/rentBook",
+  "user/rentBook",
   async (bookName: string, thunkAPI) => {
     try {
       const { token } = store.getState().auth;
-
+      console.log(token);
       return await rentABook(bookName, token || "");
     } catch (error: any) {
       const message =
@@ -47,13 +52,47 @@ export const rentBook = createAsyncThunk(
     }
   }
 );
+
+// contact
+export const sendContactMail = createAsyncThunk(
+  "user/sendContactMail",
+  async (
+    data: { email: string; subject: string; message: string },
+    thunkAPI
+  ) => {
+    try {
+      return await contact(data);
+    } catch (error: any) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      console.log(message);
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setUser: (state, action) => {
-      state.email = action.payload?.email;
-      state.username = action.payload?.username;
+    logout: (state) => {
+      state.email = "";
+      state.username = "";
+      state.boughtBooks = [];
+      state.rentedBooks = [];
+    },
+    setUserDetails: (state) => {
+      const user: localStorageUser = JSON.parse(
+        localStorage.getItem("user") || "{}"
+      );
+      state.email = user.email;
+      state.username = user.username;
+      state.boughtBooks = user.boughtBooks;
+      state.rentedBooks = user.rentedBooks;
     },
   },
   extraReducers: (builder) => {
@@ -68,9 +107,12 @@ export const userSlice = createSlice({
       .addCase(rentBook.fulfilled, (state, action: AnyAction) => {
         state.rentedBooks.push(action.payload?.book);
       })
-      .addCase(rentBook.rejected, (state, action: AnyAction) => {});
+      .addCase(rentBook.rejected, (state, action: AnyAction) => {})
+      .addCase(sendContactMail.pending, (state, action: AnyAction) => {})
+      .addCase(sendContactMail.fulfilled, (state) => {})
+      .addCase(sendContactMail.rejected, (state, action: AnyAction) => {});
   },
 });
 
-export const { setUser } = userSlice.actions;
+export const { logout, setUserDetails } = userSlice.actions;
 export default userSlice.reducer;

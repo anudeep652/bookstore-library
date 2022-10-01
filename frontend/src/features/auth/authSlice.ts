@@ -12,7 +12,7 @@ const user: localStorageUser = JSON.parse(localStorage.getItem("user") || "{}");
 
 const initialState: initialStateType = {
   username: user?.username,
-  email: user?.username,
+  email: user?.email,
   isError: false,
   isSuccess: false,
   isLoggedIn: false,
@@ -69,6 +69,7 @@ export const authSlice = createSlice({
       localStorage.removeItem("user");
       state.email = "";
       state.username = "";
+      state.isLoggedIn = false;
     },
   },
   extraReducers: (builder) => {

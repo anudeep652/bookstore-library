@@ -11,6 +11,8 @@ export interface registerType extends loginType {
 export interface localStorageUser
   extends Pick<registerType, "username" | "email"> {
   token: string | null;
+  boughtBooks: string[];
+  rentedBooks: string[];
 }
 
 export interface initialStateType
@@ -28,10 +30,11 @@ export interface initialStateUser
   rentedBooks: string[];
 }
 export interface reviews {
+  date: string;
+  message: string;
   reviewer: string;
-  reviewMessage: string;
-  date: Date;
   stars: number;
+  subject: string;
 }
 export interface bookItems {
   name: string;

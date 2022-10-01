@@ -12,7 +12,7 @@ const Author = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar name="Home" />
 
       <h1 className="text-3xl mt-10 ml-20  ">Books by {authorName}</h1>
       <div className="container my-12 mx-auto px-4 md:px-12">

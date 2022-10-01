@@ -16,6 +16,14 @@ export const rentABook = async (bookName: string, token: string) => {
       authorization: `Bearer ${token}`,
     },
   });
+  return response.data;
+};
 
+export const contact = async (data: {
+  email: string;
+  subject: string;
+  message: string;
+}) => {
+  const response = await axios.post(`${URL}/contact`, data);
   return response.data;
 };

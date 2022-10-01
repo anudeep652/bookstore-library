@@ -87,6 +87,8 @@ export const login = async (req, res) => {
         username: userExists.username,
         email: userExists.email,
         token: generateJwt(userExists._id),
+        boughtBooks: userExists.boughtBooks,
+        rentedBooks: userExists.rentedBooks,
       });
     }
     return res.status(400).json({ message: "Invalid password" });
@@ -147,6 +149,58 @@ export const rentBook = async (req, res) => {
     } catch (error) {
       return res.status(400).json({ error });
     }
+  } catch (error) {
+    return res.status(400).json({ error: error });
+  }
+};
+
+// { bookName:String,subject:String,message:string}
+export const review = async (req, res) => {
+  const { bookName, review } = req.body;
+  console.log(req.body);
+  const book = await Book.findOne({ name: bookName });
+  const user = await User.findOne({ username: req.user.username });
+  try {
+    book.reviews.push({
+      reviewer: req.user.username,
+      subject: review.subject,
+      message: review.message,
+    });
+
+    user.reviewsMade.push({
+      bookName: bookName,
+      subject: review.subject,
+      message: review.message,
+    });
+
+    await book.save();
+    await user.save();
+    return res
+      .status(200)
+      .json({
+        message: "Successfully reviewed",
+        bookName,
+        review: {
+          date: new Date().toLocaleDateString(),
+          message: review.message,
+          reviewer: user.username,
+          subject: review.subject,
+          stars: 0,
+        },
+      });
+  } catch (error) {
+    return res.status(400).json({ error: error });
+  }
+};
+
+export const contact = async (req, res) => {
+  const { email, subject, message } = req.body;
+  console.log(req.body);
+  // console.log(email, subject, message);
+
+  try {
+    await sendMail(process.env.ADMIN_EMAIL, "", true, email, subject, message);
+    return res.status(200).json({ message: "Successfully sent Mail" });
   } catch (error) {
     return res.status(400).json({ error: error });
   }
