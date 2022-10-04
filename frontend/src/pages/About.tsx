@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 
 const About = () => {
@@ -14,13 +15,13 @@ const About = () => {
         </p>
         <p className="text-xl">
           All the images, text content are taken from{" "}
-          <a
+          <Link
             target="blank"
-            href="https://coolmaterial.com/feature/50-books-every-man-should-read-once-in-his-life/"
+            to="https://coolmaterial.com/feature/50-books-every-man-should-read-once-in-his-life/"
             className="text-indigo-600"
           >
             coolmaterial.com
-          </a>
+          </Link>
         </p>
       </div>
     </>

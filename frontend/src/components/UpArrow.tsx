@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import KeyboardArrowUpTwoToneIcon from "@mui/icons-material/KeyboardArrowUpTwoTone";
-import { useParams } from "react-router-dom";
+import { Link, NavLink, useParams } from "react-router-dom";
 
 interface scrollStatus {
   scrollDirection: string | null;
@@ -37,8 +37,8 @@ const UpArrow = () => {
 
   return (
     <>
-      {scrollStatus.scrollDirection === "down" && (
-        <a href="#navbar">
+      {scrollStatus.scrollDirection === "up" && (
+        <Link to="#navbar">
           <KeyboardArrowUpTwoToneIcon
             className="uparrow"
             onClick={() => {
@@ -46,7 +46,7 @@ const UpArrow = () => {
             }}
             fontSize="large"
           />
-        </a>
+        </Link>
       )}
     </>
   );

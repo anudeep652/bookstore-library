@@ -78,7 +78,8 @@ const MyBooks = () => {
                           {remStars()} */}
 
                           <span className="text-gray-600 ml-3">
-                            {b.reviews?.length} reviews
+                            {b.reviews?.length}{" "}
+                            {b.reviews?.length === 1 ? "review" : "reviews"}
                           </span>
                         </>
                       </span>
@@ -162,7 +163,8 @@ const MyBooks = () => {
                       {remStars()} */}
 
                         <span className="text-gray-600 ml-3">
-                          {b.reviews?.length} reviews
+                          {b.reviews?.length}{" "}
+                          {b.reviews?.length === 1 ? "review" : "reviews"}
                         </span>
                       </span>
                     </div>
@@ -172,7 +174,7 @@ const MyBooks = () => {
                     <>
                       <h1 className="mb-3">You Rented this book</h1>
 
-                      <Link to={"#/efe"}>
+                      <Link to={`/${b.name}/writeReview`}>
                         Write a review{" "}
                         <CreateIcon
                           fontSize="small"

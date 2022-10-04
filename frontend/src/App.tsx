@@ -1,6 +1,12 @@
 import React, { useEffect } from "react";
 import Login from "./pages/Login";
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  useNavigate,
+  Navigate,
+} from "react-router-dom";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,8 +27,9 @@ const Logout = () => {
 
   useEffect(() => {
     dispatch(logout());
-    navigate("/login");
+    navigate("/user/login");
   }, []);
+
   return <></>;
 };
 function App() {
@@ -42,43 +49,65 @@ function App() {
         <Routes>
           {/*login and register routes  */}
           <Route path="/user">
-            <Route path="login" element={<Login />} />
-            <Route path="register" element={<Register />} />
+            <Route
+              path="login"
+              element={!user.email ? <Login /> : <Navigate to={"/"} />}
+            />
+            <Route
+              path="register"
+              element={!user.email ? <Register /> : <Navigate to={"/"} />}
+            />
           </Route>
 
-          <Route path="/" element={<Home />} />
+          {/* Home route */}
+          <Route
+            path="/"
+            element={user.email ? <Home /> : <Navigate to={"/user/login"} />}
+          />
 
           {/* book routes */}
           <Route path="/book">
             <Route
               path=":bookName"
-              element={user.email ? <Book /> : <Login />}
+              element={user.email ? <Book /> : <Navigate to={"/user/login"} />}
             />
           </Route>
-          <Route path="/login" element={<Login />} />
+          {/* <Route path="/login" element={<Login />} /> */}
 
           {/* author route */}
           <Route
             path="/author/:authorName"
-            element={user.email ? <Author /> : <Login />}
+            element={user.email ? <Author /> : <Navigate to={"/user/login"} />}
           />
 
           {/* purchase routes*/}
           <Route>
             <Route
               path=":bookName/buy"
-              element={user.email ? <ThankYouPage mode="buy" /> : <Login />}
+              element={
+                user.email ? (
+                  <ThankYouPage mode="buy" />
+                ) : (
+                  <Navigate to={"/user/login"} />
+                )
+              }
             />
             <Route
               path=":bookName/rent"
-              element={user.email ? <ThankYouPage mode="rent" /> : <Login />}
+              element={
+                user.email ? (
+                  <ThankYouPage mode="rent" />
+                ) : (
+                  <Navigate to={"/user/login"} />
+                )
+              }
             />
           </Route>
 
           {/* My books */}
           <Route
             path="/mybooks"
-            element={user.email ? <MyBooks /> : <Login />}
+            element={user.email ? <MyBooks /> : <Navigate to={"/user/login"} />}
           />
 
           {/*write review */}

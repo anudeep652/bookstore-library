@@ -99,7 +99,7 @@ const Form = ({ formCase }: prop) => {
     dispatch(logout());
     setErrorMessage("");
     if (!isError && isSuccess && message === "") {
-      navigate("/", { replace: true });
+      navigate("/");
       dispatch(reset());
     }
   }, [isError, isSuccess, message, navigate, dispatch]);
@@ -220,7 +220,7 @@ const Form = ({ formCase }: prop) => {
                 onSubmit={handleSubmit}
                 sx={{ mt: 1 }}
               >
-                {formCase === "REGISTER" && (
+                {formCase === caseEnum.REGISTER && (
                   <TextField
                     margin="normal"
                     required
@@ -274,6 +274,25 @@ const Form = ({ formCase }: prop) => {
                     })
                   }
                 />
+                {formCase === caseEnum.REGISTER && (
+                  <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    name="confirmPassword"
+                    label="confirmPassword"
+                    type="password"
+                    id="confirmPassword"
+                    autoComplete="off"
+                    value={formFields.confirmPassword}
+                    onChange={(e) =>
+                      setFormFields({
+                        ...formFields,
+                        [e.target.name]: e.target.value,
+                      })
+                    }
+                  />
+                )}
 
                 <Button
                   type="submit"

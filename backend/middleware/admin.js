@@ -25,10 +25,7 @@ export const adminMiddleWare = async (req, res, next) => {
       // console.log(error);
       return res.status(401).json({ error: "Not authorized" });
     }
-  }
-
-  if (!token) {
-    return;
+  } else {
     res.status(401).json({ error: "Not authorized, no token" });
   }
 };

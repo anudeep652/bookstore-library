@@ -179,7 +179,7 @@ const Navbar = ({ name }: { name?: navtype }) => {
                     </Menu>
                   ) : (
                     <button className="text-white  md:p-2.5 md:ml-2 ml-2">
-                      <Link to={"/login"}>Login</Link>
+                      <Link to={"/user/login"}>Login</Link>
                     </button>
                   )}
                 </div>
@@ -189,7 +189,7 @@ const Navbar = ({ name }: { name?: navtype }) => {
             <Disclosure.Panel className="sm:hidden">
               <div className="space-y-1 px-2 pt-2 pb-3">
                 {navigation.map((item) => (
-                  <Link to={item.href}>
+                  <Link to={item.href} key={item.name}>
                     <Disclosure.Button
                       key={item.name}
                       as="a"

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { AppDispatch, RootState } from "../app/store";
@@ -18,12 +18,12 @@ const Home = () => {
   );
 
   console.log(username);
+
   useEffect(() => {
-    // window.onpageshow = async function () {
+    console.log("exec");
     dispatch(getBooks());
 
     dispatch(setUserDetails());
-    // };
   }, []);
 
   return (

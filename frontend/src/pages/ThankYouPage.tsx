@@ -32,9 +32,9 @@ const ThankYouPage = ({ mode }: { mode: "buy" | "rent" }) => {
           <div className="footer-like">
             <p>
               Email not received?
-              <a href="mailto:anudeepsvka@gmail.com">
+              <Link to="mailto:anudeepsvka@gmail.com">
                 Click here to contact admin
-              </a>
+              </Link>
             </p>
           </div>
         </div>

@@ -91,8 +91,12 @@ export const userSlice = createSlice({
       );
       state.email = user.email;
       state.username = user.username;
-      state.boughtBooks = user.boughtBooks;
-      state.rentedBooks = user.rentedBooks;
+      user.boughtBooks.forEach((b) => {
+        !state.boughtBooks.includes(b) && state.boughtBooks.push(b);
+      });
+      user.rentedBooks.forEach((b) => {
+        !state.rentedBooks.includes(b) && state.rentedBooks.push(b);
+      });
     },
   },
   extraReducers: (builder) => {

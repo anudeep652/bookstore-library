@@ -116,8 +116,8 @@ const Reviews = ({ reviewsArr }: { reviewsArr: reviews[] }) => {
                       </svg>
                     </button>
                   </div>
-                  <div className="cursor-pointer mt-2 md:mt-0 stars">
-                    <div className="stars flex gap-1">
+                  <div className=" mt-2 md:mt-0 stars">
+                    <div className="stars flex gap-1 cursor-default">
                       {n.stars === 0
                         ? [1, 2, 3, 4, 5].map((s) => (
                             <svg

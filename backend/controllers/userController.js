@@ -11,7 +11,7 @@ const validateEmail = (email) => {
 };
 
 //generate jwt token
-const generateJwt = (id) => {
+export const generateJwt = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: "30d",
   });
