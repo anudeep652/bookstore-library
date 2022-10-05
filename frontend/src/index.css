@@ -74,6 +74,9 @@ svg {
     width: 100% !important;
     /* margin-right: 10px; */
   }
+  .author {
+    margin-left: 40px;
+  }
 }
 
 /* large screen */
@@ -90,5 +93,8 @@ svg {
     position: absolute;
     bottom: 15%;
     right: 30%;
+  }
+  .author {
+    margin-left: 350px;
   }
 }
