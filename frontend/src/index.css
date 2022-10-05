@@ -41,6 +41,8 @@ svg {
 .mystyle {
   margin-left: 10em;
 }
+
+/* smaill screen */
 @media (max-width: 400px) {
   .uparrow {
     right: 10px;
@@ -61,8 +63,20 @@ svg {
     right: 7%;
     font-size: 0.9em;
   }
+  .responsive-width {
+    margin-left: 20px !important;
+    margin-right: 0px !important;
+  }
+  .responsive-container {
+    min-width: 350px;
+  }
+  .error-alert {
+    width: 100% !important;
+    /* margin-right: 10px; */
+  }
 }
 
+/* large screen */
 @media (min-width: 400px) {
   .nf {
     margin-bottom: 25em;

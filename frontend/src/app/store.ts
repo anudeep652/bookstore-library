@@ -9,6 +9,7 @@ export const store = configureStore({
     book: bookReducer,
     user: userReducer,
   },
+  devTools: false,
 });
 
 export type AppDispatch = typeof store.dispatch;

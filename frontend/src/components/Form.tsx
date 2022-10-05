@@ -29,13 +29,14 @@ const theme = createTheme({
   typography: {
     h1: {
       "@media (max-width:600px)": {
-        fontSize: "2.5em",
+        fontSize: "2em",
         padding: "0 auto",
       },
     },
     h3: {
       "@media (max-width:600px)": {
-        marginLeft: "15px",
+        fontSize: "1.3em !important",
+        marginLeft: "25px",
       },
     },
   },
@@ -80,7 +81,7 @@ const Form = ({ formCase }: prop) => {
           setEmptyFieldsError(true);
         }
 
-        console.log(formFields);
+        // console.log(formFields);
       }
     } else {
       if (!formFields.email || !formFields.password) {
@@ -115,10 +116,12 @@ const Form = ({ formCase }: prop) => {
             width: "70vw",
             textAlign: "center",
             margin: "6em auto",
+
             display: "flex",
             fontFamily: "Josefin Sans",
             // fontWeight: "",
           }}
+          className="responsive-width"
         >
           <CssBaseline />
           <Grid
@@ -141,10 +144,11 @@ const Form = ({ formCase }: prop) => {
           <Grid
             item
             xs={12}
-            sm={8}
+            sm={12}
             md={5}
             component={Paper}
-            elevation={6}
+            className="responsive-container"
+            elevation={3}
             square
           >
             <Grid container>
@@ -202,13 +206,14 @@ const Form = ({ formCase }: prop) => {
                         </IconButton>
                       }
                       sx={{ mb: 2, width: "450px" }}
+                      className="error-alert"
                     >
                       {emptyFieldsError ? errorMessage : message}
                     </Alert>
                   </Collapse>
                 </>
               )}
-              <Avatar sx={{ m: 1, bgcolor: "#3be31f" }}>
+              <Avatar sx={{ m: 1, bgcolor: "#4f46e5;" }}>
                 <LockOutlinedIcon />
               </Avatar>
               <Typography component="h1" variant="h5">
@@ -302,6 +307,12 @@ const Form = ({ formCase }: prop) => {
                     mt: 3,
                     mb: 2,
                     backgroundColor: "rgb(79 ,70 ,229)",
+                    ":active": {
+                      backgroundColor: "rgb(79 ,70 ,229)",
+                    },
+                    ":hover": {
+                      backgroundColor: "rgb(79 ,70 ,229)",
+                    },
                   }}
                 >
                   {formCase === caseEnum.REGISTER ? "Sign up" : "Login"}

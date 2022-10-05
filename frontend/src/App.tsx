@@ -37,7 +37,7 @@ function App() {
   const { isSuccess } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
 
-  console.log(user);
+  // console.log(user);
 
   useEffect(() => {
     dispatch(reset());

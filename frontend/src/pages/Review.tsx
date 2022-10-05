@@ -28,7 +28,7 @@ const Review = () => {
       review: reviewFields,
       stars: stars,
     };
-    console.log(data);
+    // console.log(data);
     dispatch(writeReview(data));
     navigate(`/book/${bookName}`);
   };

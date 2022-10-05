@@ -14,7 +14,9 @@ const Author = () => {
     <>
       <Navbar name="Home" />
 
-      <h1 className="text-3xl mt-10 ml-20  ">Books by {authorName}</h1>
+      <h1 className="text-3xl mt-10 " style={{ marginLeft: "350px" }}>
+        Books by {authorName}
+      </h1>
       <div className="container my-12 mx-auto px-4 md:px-12">
         <div className="flex flex-wrap md:-mx-1 lg:-mx-4">
           <div
@@ -28,7 +30,7 @@ const Author = () => {
             >
               <div className="lg:w-4/5 md:mx-12 flex flex-wrap">
                 <img
-                  alt="ecommerce"
+                  alt={booksByAuthor[0].name}
                   className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded "
                   src={booksByAuthor[0].imageUrl}
                   style={{ cursor: "auto" }}

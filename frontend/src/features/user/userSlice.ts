@@ -39,7 +39,7 @@ export const rentBook = createAsyncThunk(
   async (bookName: string, thunkAPI) => {
     try {
       const { token } = store.getState().auth;
-      console.log(token);
+      // console.log(token);
       return await rentABook(bookName, token || "");
     } catch (error: any) {
       const message =
@@ -69,7 +69,7 @@ export const sendContactMail = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-      console.log(message);
+      // console.log(message);
       return thunkAPI.rejectWithValue(message);
     }
   }

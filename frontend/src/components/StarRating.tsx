@@ -10,7 +10,7 @@ function StarRating({ dataPasser }: { dataPasser: any }) {
   const [star3, setStar3] = useState(false);
   const [star4, setStar4] = useState(false);
   const [star5, setStar5] = useState(false);
-  console.log(rating);
+  // console.log(rating);
 
   return (
     <span>
@@ -47,7 +47,7 @@ function StarRating({ dataPasser }: { dataPasser: any }) {
             setStar1(true);
             dataPasser(2);
 
-            console.log(2);
+            // console.log(2);
           }}
         />
         <FaStar
@@ -70,7 +70,7 @@ function StarRating({ dataPasser }: { dataPasser: any }) {
             setStar1(true);
             dataPasser(3);
 
-            console.log(3);
+            // console.log(3);
           }}
         />
         <FaStar
@@ -96,7 +96,7 @@ function StarRating({ dataPasser }: { dataPasser: any }) {
             setStar1(true);
             dataPasser(4);
 
-            console.log(4);
+            // console.log(4);
           }}
         />
         <FaStar

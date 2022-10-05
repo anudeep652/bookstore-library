@@ -22,7 +22,7 @@ body {
   padding: 30px;
   text-align: center;
 }
-h1 {
+h1.thankyou-text {
   font-family: "Kaushan Script", cursive;
   font-size: 4em;
   letter-spacing: 3px;

@@ -14,7 +14,7 @@ const RecommendedBooks = () => {
   );
 
   const { bookName } = useParams();
-  console.log(bookName);
+  // console.log(bookName);
 
   const recommendedBooks = books.filter((b) => b.name !== bookName);
 
@@ -33,10 +33,10 @@ const RecommendedBooks = () => {
               <img
                 className="h-48 w-full object-cover md:h-full md:w-48"
                 src={b.imageUrl}
-                alt="Man looking at item at a store"
+                alt={b.name}
               />
             </div>
-            <div className="p-8">
+            <div className="md:p-8 pl-0 pt-6">
               <div className="capitalize tracking-wide text-2xl text-indigo-500 font-semibold">
                 {b.name}
               </div>
@@ -57,11 +57,11 @@ const RecommendedBooks = () => {
               rentedBooks.some((bookName) => bookName === b.name) ? (
                 <>
                   {boughtBooks.some((bookName) => bookName === b.name) ? (
-                    <h1 className="mb-3" key={b.name}>
+                    <h1 className="mb-3 text-xl" key={b.name}>
                       You bought this book
                     </h1>
                   ) : (
-                    <h1 className="mb-5">You Rented this book</h1>
+                    <h1 className="mb-5 text-xl">You Rented this book</h1>
                   )}
 
                   <Link to={`/${b.name}/writeReview`}>

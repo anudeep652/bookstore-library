@@ -7,7 +7,7 @@ const URL: string =
 
 export const registerUser = async (user: registerType) => {
   const response = await axios.post(`${URL}/user/register`, user);
-  console.log(response);
+  // console.log(response);
 
   if (response.data) {
     localStorage.setItem("user", JSON.stringify(response.data));

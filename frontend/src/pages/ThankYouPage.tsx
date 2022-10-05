@@ -14,7 +14,7 @@ const ThankYouPage = ({ mode }: { mode: "buy" | "rent" }) => {
       <div className="content">
         <div className="wrapper-1">
           <div className="wrapper-2 ">
-            <h1 className="text-6xl mb-5">Thank you !</h1>
+            <h1 className="text-6xl mb-5 thankyou-text">Thank you !</h1>
             <p>
               Thanks for {mode}ing the book{" "}
               <span className="text-black">"{bookName}"</span>

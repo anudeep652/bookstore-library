@@ -17,10 +17,10 @@ const Home = () => {
     (state: RootState) => state.user
   );
 
-  console.log(username);
+  // console.log(username);
 
   useEffect(() => {
-    console.log("exec");
+    // console.log("exec");
     dispatch(getBooks());
 
     dispatch(setUserDetails());
@@ -32,15 +32,18 @@ const Home = () => {
       <div className="max-w-sm mx-auto bg-white rounded-xl  overflow-hidden md:max-w-[90%] grid md:grid-cols-2 md:gap-10 last:mb-1">
         {books.map((book) => (
           // < >
-          <div className="md:flex shadow-md my-5 col-span p-10" key={book.name}>
+          <div
+            className="md:flex shadow-md my-5 col-span p-10 "
+            key={book.name}
+          >
             <div className="md:shrink-0">
               <img
                 className="h-48 w-full object-cover md:h-full md:w-48"
                 src={book.imageUrl}
-                alt="Man looking at item at a store"
+                alt={book.name}
               />
             </div>
-            <div className="p-8">
+            <div className="md:p-8 pl-0 pt-6">
               <div className="capitalize tracking-wide text-2xl text-indigo-500 font-semibold">
                 {book.name}
               </div>
@@ -61,9 +64,9 @@ const Home = () => {
               rentedBooks.some((bookName) => bookName === book.name) ? (
                 <>
                   {boughtBooks.some((bookName) => bookName === book.name) ? (
-                    <h1 className="mb-3">You bought this book</h1>
+                    <h1 className="mb-3 text-xl">You bought this book</h1>
                   ) : (
-                    <h1 className="mb-5">You Rented this book</h1>
+                    <h1 className="mb-5 text-xl">You Rented this book</h1>
                   )}
 
                   <Link to={`/${book.name}/writeReview`}>

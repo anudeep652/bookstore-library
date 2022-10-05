@@ -67,7 +67,7 @@ const Navbar = ({ name }: { name?: navtype }) => {
                 </div>
                 <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                   <div className="flex flex-shrink-0 items-center">
-                    <h1 className="text-white mx-0 text-2xl ">
+                    <h1 className="text-white mx-0 text-3xl ">
                       <Link to={"/"}>Bookstore Library</Link>
                     </h1>
                   </div>
@@ -109,7 +109,7 @@ const Navbar = ({ name }: { name?: navtype }) => {
                           <img
                             className="h-8 w-8 rounded-full outline-none"
                             src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                            alt=""
+                            alt="user"
                           />
                         </Menu.Button>
                       </div>

@@ -18,7 +18,7 @@ const MyBooks = () => {
   return (
     <>
       <Navbar name="My Library" />
-      <h1 className="text-xl text-black text-start  mt-10 p-5 md:text-2xl md:ml-15 mystyle">
+      <h1 className="text-2xl text-black text-start  mt-10 p-5 md:text-3xl md:ml-15 mystyle">
         You have bought {userBoughtBooks.length}{" "}
         {userBoughtBooks.length === 1 ? "book" : "books"}
       </h1>
@@ -36,7 +36,7 @@ const MyBooks = () => {
               >
                 <div className="lg:w-4/5 md:mx-12 flex flex-wrap ">
                   <img
-                    alt="ecommerce"
+                    alt={b.name}
                     className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded "
                     src={b.imageUrl}
                     style={{ cursor: "auto" }}
@@ -88,7 +88,7 @@ const MyBooks = () => {
                     <div className="flex mt-5 items-center pb-5 border-b-2 border-gray-100 mb-5"></div>
 
                     <>
-                      <h1 className="mb-3">You bought this book</h1>
+                      <h1 className="mb-3 text-xl">You bought this book</h1>
 
                       <Link to={`/${b.name}/writeReview`}>
                         Write a review
@@ -106,7 +106,7 @@ const MyBooks = () => {
         </div>
 
         <div className="flex flex-wrap md:-mx-1 lg:-mx-4 mt-20">
-          <h1 className="text-xl text-black text-center mb-5 ml-10 w-90 md:text-2xl">
+          <h1 className="text-2xl text-black text-center mb-5 ml-10 w-90 md:text-3xl">
             You have rented {userRentedBooks.length}{" "}
             {userRentedBooks.length === 1 ? "book" : "books"}
           </h1>
@@ -122,7 +122,7 @@ const MyBooks = () => {
               >
                 <div className="lg:w-4/5 md:mx-12 flex flex-wrap ">
                   <img
-                    alt="ecommerce"
+                    alt={b.name}
                     className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded "
                     src={b.imageUrl}
                     style={{ cursor: "auto" }}
@@ -172,7 +172,7 @@ const MyBooks = () => {
                     <div className="flex mt-5 items-center pb-5 border-b-2 border-gray-100 mb-5"></div>
 
                     <>
-                      <h1 className="mb-3">You Rented this book</h1>
+                      <h1 className="mb-3 text-xl">You Rented this book</h1>
 
                       <Link to={`/${b.name}/writeReview`}>
                         Write a review{" "}

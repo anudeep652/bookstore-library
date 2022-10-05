@@ -21,14 +21,14 @@ const Book = () => {
 
   //finding the current book
   const currBook = books.filter((b) => b.name === bookName);
-  console.log(currBook);
+  // console.log(currBook);
 
   let starsArr: number[] = [];
   let count = currBook[0]?.stars || 0;
   for (let i = 0; i < count; i++) {
     starsArr.push(1);
   }
-  console.log(starsArr);
+  // console.log(starsArr);
   useEffect(() => {
     dispatch(setReviews());
   }, []);
@@ -36,14 +36,14 @@ const Book = () => {
   //return the remaining no of stars without likes
   const remStars = () => {
     if (starsArr.length !== 5) {
-      console.log(starsArr.length);
+      // console.log(starsArr.length);
       let count = 5 - starsArr.length;
       starsArr.splice(0, starsArr.length);
-      console.log(starsArr);
+      // console.log(starsArr);
       for (let i = 0; i < count; i++) {
         starsArr.push(i);
       }
-      console.log(starsArr);
+      // console.log(starsArr);
       return starsArr.map((s) => (
         <svg
           key={s}
@@ -77,7 +77,7 @@ const Book = () => {
             >
               <div className="lg:w-4/5 md:mx-12 flex flex-wrap">
                 <img
-                  alt="ecommerce"
+                  alt={currBook[0].name}
                   className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded "
                   src={currBook[0].imageUrl}
                   style={{ cursor: "auto" }}
@@ -139,9 +139,9 @@ const Book = () => {
                       {boughtBooks.some(
                         (bookName) => bookName === currBook[0].name
                       ) ? (
-                        <h1 className="mb-3">You bought this book</h1>
+                        <h1 className="mb-3 text-xl">You bought this book</h1>
                       ) : (
-                        <h1 className="mb-5">You Rented this book</h1>
+                        <h1 className="mb-5 text-xl">You Rented this book</h1>
                       )}
 
                       <Link to={`/${currBook[0].name}/writeReview`}>
