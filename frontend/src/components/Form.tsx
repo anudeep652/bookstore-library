@@ -189,7 +189,7 @@ const Form = ({ formCase }: prop) => {
             >
               {(emptyFieldsError || isError) && (
                 <>
-                  <Collapse in={true}>
+                  <Collapse in={true} className="mr-5 md:mr-0">
                     <Alert
                       severity="error"
                       action={

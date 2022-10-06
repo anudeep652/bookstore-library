@@ -81,6 +81,7 @@ export const authSlice = createSlice({
         state.username = action.payload?.username;
         state.isSuccess = true;
         state.isLoggedIn = true;
+        state.token = action.payload?.token;
       })
       .addCase(register.rejected, (state, action: AnyAction) => {
         state.isError = true;
@@ -94,6 +95,7 @@ export const authSlice = createSlice({
         state.isSuccess = true;
         state.isError = false;
         state.isLoggedIn = true;
+        state.token = action.payload?.token;
         // store.getState().auth
       })
       .addCase(login.rejected, (state, action: AnyAction) => {

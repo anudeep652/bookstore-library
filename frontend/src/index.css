@@ -71,7 +71,7 @@ svg {
     min-width: 350px;
   }
   .error-alert {
-    width: 100% !important;
+    width: 110% !important;
     /* margin-right: 10px; */
   }
   .author {

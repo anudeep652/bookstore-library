@@ -29,7 +29,7 @@ export const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: false,
     }),
-  devTools: false,
+  // devTools: false,
 });
 
 export type AppDispatch = typeof store.dispatch;
