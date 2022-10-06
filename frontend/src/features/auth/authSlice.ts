@@ -1,5 +1,4 @@
 import { AnyAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { store } from "../../app/store";
 import {
   initialStateType,
   localStorageUser,
