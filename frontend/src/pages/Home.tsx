@@ -11,7 +11,9 @@ import CreateIcon from "@mui/icons-material/Create";
 
 const Home = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { books } = useSelector((state: RootState) => state.book);
+  const { books } = useSelector(
+    (state: RootState) => state.persistedReducer.book
+  );
   const { username } = useSelector((state: RootState) => state.auth);
   const { boughtBooks, rentedBooks } = useSelector(
     (state: RootState) => state.user
@@ -60,10 +62,10 @@ const Home = () => {
                 see more about this book
               </Link>
               <div className="flex mt-1 items-center pb-5 border-b-2 border-gray-100 mb-5"></div>
-              {boughtBooks.some((bookName) => bookName === book.name) ||
-              rentedBooks.some((bookName) => bookName === book.name) ? (
+              {boughtBooks?.some((bookName) => bookName === book.name) ||
+              rentedBooks?.some((bookName) => bookName === book.name) ? (
                 <>
-                  {boughtBooks.some((bookName) => bookName === book.name) ? (
+                  {boughtBooks?.some((bookName) => bookName === book.name) ? (
                     <h1 className="mb-3 text-xl">You bought this book</h1>
                   ) : (
                     <h1 className="mb-5 text-xl">You Rented this book</h1>

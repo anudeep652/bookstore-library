@@ -6,7 +6,9 @@ import { buyBook, rentBook } from "../features/user/userSlice";
 import CreateIcon from "@mui/icons-material/Create";
 
 const RecommendedBooks = () => {
-  const { books } = useSelector((state: RootState) => state.book);
+  const { books } = useSelector(
+    (state: RootState) => state.persistedReducer.book
+  );
   const dispatch = useDispatch<AppDispatch>();
   const { username } = useSelector((state: RootState) => state.auth);
   const { boughtBooks, rentedBooks } = useSelector(

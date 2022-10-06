@@ -11,10 +11,12 @@ const MyBooks = () => {
   const { boughtBooks, rentedBooks } = useSelector(
     (state: RootState) => state.user
   );
-  const { books } = useSelector((state: RootState) => state.book);
+  const { books } = useSelector(
+    (state: RootState) => state.persistedReducer.book
+  );
 
-  const userBoughtBooks = books.filter((b) => boughtBooks.includes(b.name));
-  const userRentedBooks = books.filter((b) => rentedBooks.includes(b.name));
+  const userBoughtBooks = books.filter((b) => boughtBooks?.includes(b.name));
+  const userRentedBooks = books.filter((b) => rentedBooks?.includes(b.name));
   return (
     <>
       <Navbar name="My Library" />

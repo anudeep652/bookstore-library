@@ -15,7 +15,7 @@ const initialState: initialStateType = {
   email: user?.email,
   isError: false,
   isSuccess: false,
-  isLoggedIn: false,
+  isLoggedIn: user?.email ? true : false,
   message: "",
   token: user?.token,
 };
@@ -67,6 +67,7 @@ export const authSlice = createSlice({
     },
     logout: (state) => {
       localStorage.removeItem("user");
+      localStorage.removeItem("persist:root");
       state.email = "";
       state.username = "";
       state.isLoggedIn = false;
@@ -76,8 +77,8 @@ export const authSlice = createSlice({
     builder
       .addCase(register.pending, (state) => {})
       .addCase(register.fulfilled, (state, action) => {
-        state.email = action.payload.email;
-        state.username = action.payload.username;
+        state.email = action.payload?.email;
+        state.username = action.payload?.username;
         state.isSuccess = true;
         state.isLoggedIn = true;
       })

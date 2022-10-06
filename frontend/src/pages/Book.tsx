@@ -12,7 +12,9 @@ import { setReviews } from "../features/books/bookSlice";
 
 const Book = () => {
   const { bookName } = useParams();
-  const { books } = useSelector((state: RootState) => state.book);
+  const { books } = useSelector(
+    (state: RootState) => state.persistedReducer.book
+  );
   const { boughtBooks, rentedBooks } = useSelector(
     (state: RootState) => state.user
   );

@@ -91,11 +91,11 @@ export const userSlice = createSlice({
       );
       state.email = user.email;
       state.username = user.username;
-      user.boughtBooks.forEach((b) => {
-        !state.boughtBooks.includes(b) && state.boughtBooks.push(b);
+      user.boughtBooks?.forEach((b) => {
+        !state.boughtBooks?.includes(b) && state.boughtBooks.push(b);
       });
-      user.rentedBooks.forEach((b) => {
-        !state.rentedBooks.includes(b) && state.rentedBooks.push(b);
+      user.rentedBooks?.forEach((b) => {
+        !state.rentedBooks?.includes(b) && state.rentedBooks.push(b);
       });
     },
   },

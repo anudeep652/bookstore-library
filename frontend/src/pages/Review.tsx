@@ -13,7 +13,9 @@ const Review = () => {
   const { bookName } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const { books } = useSelector((state: RootState) => state.book);
+  const { books } = useSelector(
+    (state: RootState) => state.persistedReducer.book
+  );
   const currBook = books.filter((b) => b.name === bookName);
   const [reviewFields, setReviewFields] = useState({
     subject: "",

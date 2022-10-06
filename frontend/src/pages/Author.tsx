@@ -6,7 +6,9 @@ import Navbar from "../components/Navbar";
 
 const Author = () => {
   const { authorName } = useParams();
-  const { books } = useSelector((state: RootState) => state.book);
+  const { books } = useSelector(
+    (state: RootState) => state.persistedReducer.book
+  );
 
   const booksByAuthor = books.filter((b) => b.author === authorName);
 
