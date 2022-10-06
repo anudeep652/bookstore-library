@@ -33,14 +33,14 @@ const Footer = () => {
           </Link>
           <p className="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">
             © 2022 Bookstore Library —
-            <Link
-              to="https://www.instagram.com/anu_deep_cr7/"
+            <a
+              href="https://www.instagram.com/anu_deep_cr7/"
               className="text-gray-600 ml-1"
               rel="noopener noreferrer"
               target="_blank"
             >
               @anudeep
-            </Link>
+            </a>
           </p>
           <span className="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
             <a
