@@ -1,9 +1,7 @@
 import axios from "axios";
 import { loginType, registerType } from "../../types";
 
-const URL: string =
-  process.env.REACT_APP_REQUEST_URL ||
-  "https://bookstore-library-backend.onrender.com";
+const URL = process.env.REACT_APP_REQUEST_URL;
 
 export const registerUser = async (user: registerType) => {
   const response = await axios.post(`${URL}/user/register`, user);

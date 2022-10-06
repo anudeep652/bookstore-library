@@ -28,7 +28,7 @@ const Logout = () => {
   useEffect(() => {
     dispatch(logout());
     navigate("/user/login");
-  }, []);
+  }, [dispatch, navigate]);
 
   return <></>;
 };

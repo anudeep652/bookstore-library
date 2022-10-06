@@ -2,7 +2,6 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { RootState } from "../app/store";
-import { caseEnum } from "../types";
 import "./thankyoupage.css";
 const ThankYouPage = ({ mode }: { mode: "buy" | "rent" }) => {
   const { bookName } = useParams();

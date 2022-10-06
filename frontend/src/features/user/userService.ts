@@ -1,8 +1,6 @@
 import axios from "axios";
 
-const URL =
-  process.env.REACT_APP_REQUEST_URL ||
-  "https://bookstore-library-backend.onrender.com";
+const URL = process.env.REACT_APP_REQUEST_URL;
 
 export const BuyABook = async (bookName: string, token: string) => {
   const response = await axios.post(`${URL}/${bookName}/buy`, bookName, {

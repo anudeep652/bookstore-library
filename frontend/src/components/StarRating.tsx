@@ -2,7 +2,6 @@ import { useState } from "react";
 import { FaStar } from "react-icons/fa";
 
 function StarRating({ dataPasser }: { dataPasser: any }) {
-  const [rating, setRating] = useState(0);
   const [clicked, setClicked] = useState(false);
 
   const [star1, setStar1] = useState(false);

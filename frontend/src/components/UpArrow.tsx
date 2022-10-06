@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import KeyboardArrowUpTwoToneIcon from "@mui/icons-material/KeyboardArrowUpTwoTone";
-import { Link, NavLink, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 interface scrollStatus {
   scrollDirection: string | null;

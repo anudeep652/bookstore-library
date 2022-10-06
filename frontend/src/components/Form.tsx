@@ -54,7 +54,7 @@ const Form = ({ formCase }: prop) => {
 
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const { isError, message, isSuccess, email, username } = useSelector(
+  const { isError, message, isSuccess } = useSelector(
     (state: RootState) => state.auth
   );
 

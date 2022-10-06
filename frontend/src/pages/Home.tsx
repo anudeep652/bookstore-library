@@ -26,7 +26,7 @@ const Home = () => {
     dispatch(getBooks());
 
     dispatch(setUserDetails());
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

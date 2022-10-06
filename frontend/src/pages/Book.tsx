@@ -33,7 +33,7 @@ const Book = () => {
   // console.log(starsArr);
   useEffect(() => {
     dispatch(setReviews());
-  }, []);
+  }, [dispatch]);
 
   //return the remaining no of stars without likes
   const remStars = () => {

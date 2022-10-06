@@ -1,7 +1,5 @@
 import axios from "axios";
-const URL =
-  process.env.REACT_APP_REQUEST_URL ||
-  "https://bookstore-library-backend.onrender.com";
+const URL = process.env.REACT_APP_REQUEST_URL;
 // console.log(process.env.REACT_APP_REQUEST_URL);
 export const getAllBooks = async () => {
   const response = await axios.get(`${URL}/book`);
