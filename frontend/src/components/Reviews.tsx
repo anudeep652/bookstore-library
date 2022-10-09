@@ -4,7 +4,7 @@ import { reviews } from "../types";
 const Reviews = ({ reviewsArr }: { reviewsArr: reviews[] }) => {
   const [menu, setMenu] = useState(true);
 
-  const generateRemaining = (arr: any[], count: number) => {
+  const generateRemaining = (arr: number[], count: number) => {
     let filledStarsJSX = arr.map((el) => (
       <svg
         key={el}
@@ -20,9 +20,9 @@ const Reviews = ({ reviewsArr }: { reviewsArr: reviews[] }) => {
       </svg>
     ));
     let rem = 5 - count;
-    let tempArr: 0[] = [];
+    let tempArr: number[] = [];
     for (let j = 0; j < rem; j++) {
-      tempArr.push(0);
+      tempArr.push(j);
     }
 
     const emptyStarsJSX = tempArr.map((el) => (
@@ -48,9 +48,9 @@ const Reviews = ({ reviewsArr }: { reviewsArr: reviews[] }) => {
   };
 
   const generateFilledStarArray = (n: number) => {
-    let arr: 0[] = [];
+    let arr: number[] = [];
     for (let i = 0; i < n; i++) {
-      arr.push(0);
+      arr.push(i);
     }
     if (arr.length === 5) {
       return arr.map((el) => (
@@ -75,7 +75,7 @@ const Reviews = ({ reviewsArr }: { reviewsArr: reviews[] }) => {
   return (
     <>
       <div className="py-12 px-4 md:px-6 2xl:px-0 2xl:container 2xl:mx-auto flex justify-center items-center">
-        <div className="flex flex-col justify-start items-start w-full space-y-8">
+        <div className="flex flex-col justify-start items-start w-full space-y-8 md:ml-7">
           <div className="flex justify-start items-start">
             <p className="text-3xl lg:text-4xl font-semibold leading-7 lg:leading-9 text-gray-800">
               Reviews
