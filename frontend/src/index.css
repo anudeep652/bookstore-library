@@ -78,6 +78,26 @@ svg {
     margin-left: 40px;
   }
 }
+@media (max-width: 443px) and (min-width: 400px) {
+  .responsive-width {
+    margin-left: 20px !important;
+    margin-right: 0px !important;
+  }
+  .responsive-container {
+    min-width: 350px;
+    margin-left: 10px !important;
+  }
+}
+@media (max-width: 450px) and (min-width: 443px) {
+  .responsive-width {
+    margin-left: 20px !important;
+    margin-right: 0px !important;
+  }
+  .responsive-container {
+    min-width: 350px;
+    margin-left: 30px !important;
+  }
+}
 
 /* large screen */
 @media (min-width: 400px) {
