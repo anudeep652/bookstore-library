@@ -104,7 +104,7 @@ const Footer = () => {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="0"
-                className="w-5 h-5 cursor-pointers"
+                className="w-5 h-5 cursor-pointer"
                 viewBox="0 0 24 24"
               >
                 <path

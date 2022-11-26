@@ -39,7 +39,7 @@ svg {
 }
 
 .mystyle {
-  margin-left: 10em;
+  margin-left: 5em;
 }
 
 /* smaill screen */
@@ -123,6 +123,6 @@ svg {
     right: 30%;
   }
   .author {
-    margin-left: 350px;
+    margin-left: 150px;
   }
 }
