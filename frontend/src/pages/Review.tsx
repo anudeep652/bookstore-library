@@ -67,7 +67,7 @@ const Review = () => {
                     {currBook[0].name}
                   </p>
                   <Link
-                    to={`/author/${currBook[0].author}`}
+                    to={`#`}
                     className="text-lg title-font text-gray-500 tracking-widest capitalize  hover:underline"
                     style={{ cursor: "pointer" }}
                   >

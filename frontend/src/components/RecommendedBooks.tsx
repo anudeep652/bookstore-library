@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { AppDispatch, RootState } from "../app/store";
 import { buyBook, rentBook } from "../features/user/userSlice";
 import CreateIcon from "@mui/icons-material/Create";
@@ -9,6 +9,7 @@ const RecommendedBooks = () => {
   const { books } = useSelector(
     (state: RootState) => state.persistedReducer.book
   );
+  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { username } = useSelector((state: RootState) => state.auth);
   const { boughtBooks, rentedBooks } = useSelector(
@@ -43,7 +44,7 @@ const RecommendedBooks = () => {
                 {b.name}
               </div>
               <Link
-                to={`/author/${b.author}`}
+                to={`#`}
                 className="block mt-1 text-lg leading-tight capitalize font-medium text-black hover:underline"
               >
                 {b.author}
@@ -81,17 +82,17 @@ const RecommendedBooks = () => {
                       ${b.payAmount}
                     </span>
                     {/* <button> */}
-                    <Link
+                    <button
                       onClick={() => {
                         if (username) {
+                          navigate(`/${b.name}/buy`);
                           dispatch(buyBook(b.name));
                         }
                       }}
-                      to={`/${b.name}/buy`}
                       className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
                     >
                       Buy
-                    </Link>
+                    </button>
                     {/* </button> */}
                   </div>
                   <div className="flex">
@@ -99,17 +100,17 @@ const RecommendedBooks = () => {
                       ${b.rentAmount}
                     </span>
                     {/* <button> */}
-                    <Link
+                    <button
                       onClick={() => {
                         if (username) {
+                          navigate(`/${b.name}/rent`);
                           dispatch(rentBook(b.name));
                         }
                       }}
-                      to={`${b.name}/rent`}
                       className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
                     >
                       Rent
-                    </Link>
+                    </button>
                     {/* </button> */}
                   </div>
                 </>

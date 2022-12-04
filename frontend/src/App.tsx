@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./app/store";
 import { logout, reset } from "./features/auth/authSlice";
 import Book from "./pages/Book";
-import Author from "./pages/Author";
+// import Author from "./pages/Author";
 import ThankYouPage from "./pages/ThankYouPage";
 import Contact from "./pages/Contact";
 import MyBooks from "./pages/MyBooks";
@@ -77,7 +77,9 @@ function App() {
           {/* author route */}
           <Route
             path="/author/:authorName"
-            element={user.email ? <Author /> : <Navigate to={"/user/login"} />}
+            element={
+              user.email ? <Navigate to="/" /> : <Navigate to={"/user/login"} />
+            }
           />
 
           {/* purchase routes*/}

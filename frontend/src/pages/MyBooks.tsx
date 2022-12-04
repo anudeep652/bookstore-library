@@ -54,7 +54,7 @@ const MyBooks = () => {
                       {b.name}
                     </p>
                     <Link
-                      to={`/author/${b.author}`}
+                      to={`#`}
                       className="text-lg title-font text-gray-500 tracking-widest capitalize  hover:underline"
                       style={{ cursor: "pointer" }}
                     >
@@ -140,7 +140,7 @@ const MyBooks = () => {
                       {b.name}
                     </p>
                     <Link
-                      to={`/author/${b.author}`}
+                      to={`#`}
                       className="text-lg title-font text-gray-500 tracking-widest capitalize  hover:underline"
                       style={{ cursor: "pointer" }}
                     >

@@ -50,7 +50,7 @@ const Home = () => {
                 {book.name}
               </div>
               <Link
-                to={`/author/${book.author}`}
+                to={"#"}
                 className="block mt-1 text-lg leading-tight capitalize font-medium text-black hover:underline"
               >
                 {book.author}
