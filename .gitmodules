@@ -1,0 +1,6 @@
+[submodule "server"]
+	path = server
+	url = https://github.com/anudeep652/bookstore-library-backend/
+[submodule "client"]
+	path = client
+	url = https://github.com/anudeep652/bookstore-library-frontend
